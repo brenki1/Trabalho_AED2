@@ -4,16 +4,18 @@
 
 int main(){
 
-    Grafo* g1;
-    int* i = 0;
+    short esc = 0;
 
-    g1 = cria_Grafo(10, 20, 0);
+    do{
 
-    buscaProfundidade_Grafo(g1, 1, i);
+        printf("1) \n2) \n3) \n");
+        scanf("%i", &esc);
 
-    printf("%d\n", *i);
+    }while((esc < 1) || (esc > 3));
 
-    system("pause");
+    switch(esc){
+        case 1: printf("a");
+    }
 
     return 0;
 }
