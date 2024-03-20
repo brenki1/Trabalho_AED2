@@ -33,3 +33,54 @@ void Pesquisa(Registro *x, Apontador *p) {
     else *x = (*p)->Reg;
 }
 
+void Insere(Registro x, Apontador *p) {
+    if(p == NULL) {
+        *p = (Apontador)malloc(sizeof(No));
+        (*p)->Reg = x;
+        (*p)->esq = NULL;
+        (*p)->dir = NULL;
+        return;
+    }
+
+    if(x.Chave < (*p)->Reg.Chave) {
+        Insere(x, &(*p)->esq);
+        return;
+    }
+
+    if(x.Chave > (*p)->Reg.Chave) 
+        Insere(x, &(*p)->dir);
+    else printf("Erro: Registro ja existe na arvore!\n");
+}
+
+void Retira(Registro x, Apontador *p) {
+    Apontador aux;
+
+    if(p == NULL) {
+        printf("Erro: registro nao esta na arvore!\n");
+        return;
+    }
+
+    if(x.Chave < (*p)->Reg.Chave) { Retira(x, &(*p)->esq); return; }
+    if(x.Chave > (*p)->Reg.Chave) { Retira(x, &(*p)->dir); return; }
+
+    if((*p)->esq != NULL) {
+        Antecessor(*p, &(*p)->esq);
+        return;
+    }
+
+    aux = *p; *p = (*p)->dir;
+    free(aux);
+}
+
+void Antecessor(Apontador q, Apontador *r) {
+
+    if((*r)->dir != NULL) {
+        Antecessor(q, &(*r)->dir);
+        return;
+    }
+
+    q->Reg = (*r)->Reg;
+    q = *r;
+    *r = (*r)->esq;
+    free(q);
+}
