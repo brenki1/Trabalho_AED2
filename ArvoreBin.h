@@ -1,23 +1,20 @@
-typedef struct Registro{
-    int Chave;
-} Registro;
+typedef struct NO *ArvBin;
 
-typedef struct No *Apontador;
+ArvBin* cria_ArvBin();
 
-typedef struct No {
-    Registro Reg;
-    Apontador esq, dir;
-} No;
+void libera_NO(struct NO* no);
+void libera_ArvBin(ArvBin* raiz);
 
-typedef Apontador TipoDicionario;
+int altura_ArvBin(ArvBin *raiz);
+int totalNO_ArvBin(ArvBin *raiz);
 
-void Inicializa(Apontador *Dicionario);
-int Vazio(Apontador *Dicionario);
-void Central(Apontador p);
-void Pesquisa(Registro *x, Apontador *p);
-void Insere(Registro x, Apontador *p);
-void Retira(Registro x, Apontador *p);
-void Antecessor(Apontador q, Apontador *r);
+void preOrdem_ArvBin(ArvBin *raiz);
+void emOrdem_ArvBin(ArvBin *raiz);
+void posOrdem_ArvBin(ArvBin *raiz);
 
+int insere_ArvBin(ArvBin* raiz, int valor);
+int consulta_ArvBin(ArvBin *raiz, int valor);
 
+int remove_ArvBin(ArvBin *raiz, int valor);
+struct NO* remove_atual(struct NO* atual);
 
