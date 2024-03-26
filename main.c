@@ -5,7 +5,7 @@
 
 int main(){
 
-    short esc = 0, esc_dif = 0;
+    /*short esc = 0, esc_dif = 0;
     char esc_s;
     
 
@@ -66,7 +66,17 @@ int main(){
 
     switch(esc_dif){
         //switch case para dificuldades
-    }
+    }*/
+
+    Grafo *gr = cria_Grafo(5, 5, 0);
+    insereAresta(gr, 0, 1, 0, 0);
+    insereAresta(gr, 0, 2, 0, 0);
+    insereAresta(gr, 1, 3, 0, 0);
+    insereAresta(gr, 2, 4, 0, 0);
+    insereAresta(gr, 3, 4, 0, 0);
+    FILE *arq = criaArquivo(gr);
+    
+
 
 
     return 0;

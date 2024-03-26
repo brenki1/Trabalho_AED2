@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "Grafo.h"
 
 Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado){
@@ -153,3 +154,22 @@ int procuraMenorDistancia(float *dist, int *visitado, int NV){
 }
 
 
+FILE *criaArquivo(Grafo *gr){
+    FILE *arq;
+    int i, j;
+
+    arq = fopen("grafo.txt", "w");
+    if(arq == NULL) return NULL;
+
+    fprintf(arq, "%d %d\n", gr->nro_vertices, gr->grau_max);
+    for(i=0; i<gr->nro_vertices; i++){
+        for(j=0; j<gr->grau[i]; j++){
+            if(gr->eh_ponderado)
+                fprintf(arq, "%d %d %.2f\n", i, gr->arestas[i][j], gr->pesos[i][j]);
+            else
+                fprintf(arq, "%d %d\n", i, gr->arestas[i][j]);
+        }
+    }
+    fclose(arq);
+    return arq;
+}
