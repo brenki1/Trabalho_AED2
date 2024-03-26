@@ -67,21 +67,7 @@ int main(){
     switch(esc_dif){
         //switch case para dificuldades
     }*/
-
-    Lista *lst = criar();
-    insereInicio(lst, 1);
-    insereFim(lst, 2);
-    inserePosicao(lst, 3, 1);
-
-    NoLstAdj *aux = lst->inicio;
-
-
-    while(aux != NULL){
-        printf("%i\n", aux->vertice);
-        aux = aux->prox;
-    }
-    
-    
+  
 
 
 

@@ -10,7 +10,6 @@ typedef struct grafo{
 
 typedef struct lista Lista;
 
-typedef struct NoLstAdj NoLstAdj;
 
 Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado);
 int insereAresta(Grafo* gr, int orig, int dest, int eh_digrafo, float peso);
@@ -31,6 +30,8 @@ Lista *criar();
 int insereInicio(Lista *lst, int vertice);
 int inserePosicao(Lista *lst, int vertice, int pos);
 int insereFim(Lista *lst, int vertice);
+
+void imprime(Lista *lst);
 
 
 FILE *criaArquivo(Grafo *gr);

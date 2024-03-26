@@ -4,7 +4,7 @@
 
 typedef struct NoLstAdj{
     int vertice;
-    struct No *prox;
+    struct NoLstAdj *prox;
 }NoLstAdj;
 
 typedef struct lista{
@@ -216,6 +216,14 @@ int insereFim(Lista *lst, int vertice){
         aux->prox = novo;
     }
     return 1;
+}
+
+void imprime(Lista *lst){
+    NoLstAdj *aux = lst->inicio;
+    while(aux != NULL){
+        printf("%d\n", aux->vertice);
+        aux = aux->prox;
+    }
 }
 
 
