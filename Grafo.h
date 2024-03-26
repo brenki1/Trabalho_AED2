@@ -35,3 +35,4 @@ void imprime(Lista *lst);
 
 
 FILE *criaArquivo(Grafo *gr);
+FILE *carregaGrafo(Grafo *gr, FILE *arq);

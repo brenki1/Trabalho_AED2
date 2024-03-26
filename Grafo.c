@@ -228,21 +228,11 @@ void imprime(Lista *lst){
 
 
 FILE *criaArquivo(Grafo *gr){
-    FILE *arq;
-    int i, j;
+    
+}
 
-    arq = fopen("grafo.txt", "w");
+FILE *carregaGrafo(Grafo *gr, FILE *arq){
     if(arq == NULL) return NULL;
-
-    fprintf(arq, "%d %d\n", gr->nro_vertices, gr->grau_max);
-    for(i=0; i<gr->nro_vertices; i++){
-        for(j=0; j<gr->grau[i]; j++){
-            if(gr->eh_ponderado)
-                fprintf(arq, "%d %d %.2f\n", i, gr->arestas[i][j], gr->pesos[i][j]);
-            else
-                fprintf(arq, "%d %d\n", i, gr->arestas[i][j]);
-        }
-    }
-    fclose(arq);
-    return arq;
+    fprintf(arq, "%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
+     
 }
