@@ -2,6 +2,15 @@
 #include <stdio.h>
 #include "Grafo.h"
 
+typedef struct NoLstAdj{
+    int vertice;
+    struct No *prox;
+}NoLstAdj;
+
+typedef struct lista{
+    NoLstAdj *inicio;
+}Lista;
+
 Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado){
 
     Grafo *gr;
@@ -151,6 +160,62 @@ int procuraMenorDistancia(float *dist, int *visitado, int NV){
         }
     }
     return menor;
+}
+
+Lista *criar(){
+    Lista *lst = (Lista*) malloc(sizeof(Lista));
+    if(lst != NULL)
+        lst->inicio = NULL;
+    return lst;
+
+}
+
+int insereInicio(Lista *lst, int vertice){
+    if(lst == NULL) return 0;
+    NoLstAdj *novo = (NoLstAdj*) malloc(sizeof(NoLstAdj));
+    if(novo == NULL) return 0;
+    novo->vertice = vertice;
+    novo->prox = lst->inicio;
+    lst->inicio = novo;
+    return 1;
+}
+
+int inserePosicao(Lista *lst, int vertice, int pos){
+    if(lst == NULL) return 0;
+    NoLstAdj *ant, *atual = lst->inicio;
+    int i = 0;
+    while((i < pos) && (atual != NULL)){
+        ant = atual;
+        atual = atual->prox;
+        i++;
+    }
+    if(i != pos) return 0;
+    NoLstAdj *novo = (NoLstAdj*) malloc(sizeof(NoLstAdj));
+    if(novo == NULL) return 0;
+    novo->vertice = vertice;
+    novo->prox = atual;
+    if(i == 0)
+        lst->inicio = novo;
+    else
+        ant->prox = novo;
+    return 1;
+}
+
+int insereFim(Lista *lst, int vertice){
+    if(lst == NULL) return 0;
+    NoLstAdj *novo = (NoLstAdj*) malloc(sizeof(NoLstAdj));
+    if(novo == NULL) return 0;
+    novo->vertice = vertice;
+    novo->prox = NULL;
+    if(lst->inicio == NULL)
+        lst->inicio = novo;
+    else{
+        NoLstAdj *aux = lst->inicio;
+        while(aux->prox != NULL)
+            aux = aux->prox;
+        aux->prox = novo;
+    }
+    return 1;
 }
 
 

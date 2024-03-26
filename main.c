@@ -68,13 +68,19 @@ int main(){
         //switch case para dificuldades
     }*/
 
-    Grafo *gr = cria_Grafo(5, 5, 0);
-    insereAresta(gr, 0, 1, 0, 0);
-    insereAresta(gr, 0, 2, 0, 0);
-    insereAresta(gr, 1, 3, 0, 0);
-    insereAresta(gr, 2, 4, 0, 0);
-    insereAresta(gr, 3, 4, 0, 0);
-    FILE *arq = criaArquivo(gr);
+    Lista *lst = criar();
+    insereInicio(lst, 1);
+    insereFim(lst, 2);
+    inserePosicao(lst, 3, 1);
+
+    NoLstAdj *aux = lst->inicio;
+
+
+    while(aux != NULL){
+        printf("%i\n", aux->vertice);
+        aux = aux->prox;
+    }
+    
     
 
 
