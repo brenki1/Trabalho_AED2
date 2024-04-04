@@ -5,7 +5,7 @@
 
 int main(){
 
-    /*short esc = 0, esc_dif = 0;
+    /*short esc = 0, esc_jogo = 0;
     char esc_s;
     
 
@@ -17,8 +17,8 @@ int main(){
 
         if(esc == 1){
             //escolha de dificuldade e então o jogo em si
-            printf("Escolha sua dificuldade\n1) Facil\n2) Medio\n3) Dificil\n4) Impossivel \n");
-            scanf("%i", &esc_dif);
+            printf("Escolha sua dificuldade\n1) Começar");
+            scanf("%i", &esc_jogo);
             setbuf(stdin, NULL);
 
             if((esc_dif < 1) || (esc_dif > 4)) {
@@ -63,10 +63,7 @@ int main(){
         }
 
     }while((esc < 1) || (esc > 3));
-
-    switch(esc_dif){
-        //switch case para dificuldades
-    }*/
+*/
   
 
     Grafo* g = cria_Grafo(5,5,0);
