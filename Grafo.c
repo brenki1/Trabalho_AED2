@@ -228,7 +228,15 @@ void imprime(Lista *lst){
 
 
 FILE *criaArquivo(Grafo *gr){
-    
+    FILE *arq;
+
+    arq = fopen("Grafonv2.txt", "w+");
+
+    fprintf(arq, "%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
+
+    fclose(arq);
+
+    return arq;
 }
 
 FILE *carregaGrafo(Grafo *gr, FILE *arq){

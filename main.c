@@ -69,6 +69,12 @@ int main(){
     }*/
   
 
+    Grafo* g = cria_Grafo(5,5,0);
+
+    FILE *gr;
+
+    gr = criaArquivo(g);
+
 
 
     return 0;
