@@ -2,14 +2,6 @@
 #include <stdio.h>
 #include "Grafo.h"
 
-typedef struct NoLstAdj{
-    int vertice;
-    struct NoLstAdj *prox;
-}NoLstAdj;
-
-typedef struct lista{
-    NoLstAdj *inicio;
-}Lista;
 
 Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado){
 
@@ -162,70 +154,6 @@ int procuraMenorDistancia(float *dist, int *visitado, int NV){
     return menor;
 }
 
-Lista *criar(){
-    Lista *lst = (Lista*) malloc(sizeof(Lista));
-    if(lst != NULL)
-        lst->inicio = NULL;
-    return lst;
-
-}
-
-int insereInicio(Lista *lst, int vertice){
-    if(lst == NULL) return 0;
-    NoLstAdj *novo = (NoLstAdj*) malloc(sizeof(NoLstAdj));
-    if(novo == NULL) return 0;
-    novo->vertice = vertice;
-    novo->prox = lst->inicio;
-    lst->inicio = novo;
-    return 1;
-}
-
-int inserePosicao(Lista *lst, int vertice, int pos){
-    if(lst == NULL) return 0;
-    NoLstAdj *ant, *atual = lst->inicio;
-    int i = 0;
-    while((i < pos) && (atual != NULL)){
-        ant = atual;
-        atual = atual->prox;
-        i++;
-    }
-    if(i != pos) return 0;
-    NoLstAdj *novo = (NoLstAdj*) malloc(sizeof(NoLstAdj));
-    if(novo == NULL) return 0;
-    novo->vertice = vertice;
-    novo->prox = atual;
-    if(i == 0)
-        lst->inicio = novo;
-    else
-        ant->prox = novo;
-    return 1;
-}
-
-int insereFim(Lista *lst, int vertice){
-    if(lst == NULL) return 0;
-    NoLstAdj *novo = (NoLstAdj*) malloc(sizeof(NoLstAdj));
-    if(novo == NULL) return 0;
-    novo->vertice = vertice;
-    novo->prox = NULL;
-    if(lst->inicio == NULL)
-        lst->inicio = novo;
-    else{
-        NoLstAdj *aux = lst->inicio;
-        while(aux->prox != NULL)
-            aux = aux->prox;
-        aux->prox = novo;
-    }
-    return 1;
-}
-
-void imprime(Lista *lst){
-    NoLstAdj *aux = lst->inicio;
-    while(aux != NULL){
-        printf("%d\n", aux->vertice);
-        aux = aux->prox;
-    }
-}
-
 
 FILE *criaArquivo(Grafo *gr){
     FILE *arq;
@@ -234,16 +162,43 @@ FILE *criaArquivo(Grafo *gr){
 
     fprintf(arq, "%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
 
+    for(int i=0; i<gr->nro_vertices; i++){
+        for(int j=0; j<gr->grau[i]; j++){
+            if(gr->eh_ponderado)
+                fprintf(arq, "%d %d %.2f\n", i, gr->arestas[i][j], gr->pesos[i][j]);
+            else
+                fprintf(arq, "%d %d\n", i, gr->arestas[i][j]);
+        }
+    }
+
     fclose(arq);
 
     return arq;
 }
 
-FILE *carregaGrafo(Grafo *gr, FILE *arq, Lista *lst){
-    if(arq == NULL) return NULL;
-    
-    while(fscanf(arq, "%[ ^], %[ ^], %[ \n]", gr->nro_vertices, gr->grau_max, gr->eh_ponderado) != EOF) {
-        
+Grafo* carregaGrafoDoArquivo(const char* nomeArquivo) {
+    FILE* arq = fopen(nomeArquivo, "r");
+    if (arq == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return NULL;
     }
-     
+
+    int nro_vertices, grau_max, eh_ponderado;
+    fscanf(arq, "%d %d %d", &nro_vertices, &grau_max, &eh_ponderado);
+
+    Grafo* gr = cria_Grafo(nro_vertices, grau_max, eh_ponderado);
+
+    int orig, dest;
+    float peso;
+    while (fscanf(arq, "%d %d", &orig, &dest) != EOF) {
+        if (gr->eh_ponderado) {
+            fscanf(arq, "%f", &peso);
+            insereAresta(gr, orig, dest, 1, peso);
+        } else {
+            insereAresta(gr, orig, dest, 1, 0);
+        }
+    }
+
+    fclose(arq);
+    return gr;
 }

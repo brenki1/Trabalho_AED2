@@ -65,12 +65,18 @@ int main(){
     }while((esc < 1) || (esc > 3));
 */
   
+    Grafo *gr = carregaGrafoDoArquivo("Grafonv2.txt");
 
-    Grafo* g = cria_Grafo(5,5,0);
+    printf("%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
+    for(int i=0; i<gr->nro_vertices; i++){
+        for(int j=0; j<gr->grau[i]; j++){
+            if(gr->eh_ponderado)
+                printf("%d %d %.2f\n", i, gr->arestas[i][j], gr->pesos[i][j]);
+            else
+                printf("%d %d\n", i, gr->arestas[i][j]);
+        }
+    }
 
-    FILE *gr;
-
-    gr = criaArquivo(g);
 
 
 

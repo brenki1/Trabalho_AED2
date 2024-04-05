@@ -8,7 +8,6 @@ typedef struct grafo{
     int* grau;
 }Grafo;
 
-typedef struct lista Lista;
 
 
 Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado);
@@ -25,14 +24,7 @@ void buscaLargura_Grafo(Grafo *gr, int ini, int *visitado);
 void menorCaminho_Grafo(Grafo *gr, int ini, int *ant, float *dist);
 int procuraMenorDistancia(float *dist, int *visitado, int NV);
 
-Lista *criar();
-
-int insereInicio(Lista *lst, int vertice);
-int inserePosicao(Lista *lst, int vertice, int pos);
-int insereFim(Lista *lst, int vertice);
-
-void imprime(Lista *lst);
 
 
 FILE *criaArquivo(Grafo *gr);
-FILE *carregaGrafo(Grafo *gr, FILE *arq);
+Grafo* carregaGrafoDoArquivo(const char* nomeArquivo);
