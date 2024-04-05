@@ -239,8 +239,11 @@ FILE *criaArquivo(Grafo *gr){
     return arq;
 }
 
-FILE *carregaGrafo(Grafo *gr, FILE *arq){
+FILE *carregaGrafo(Grafo *gr, FILE *arq, Lista *lst){
     if(arq == NULL) return NULL;
-    fprintf(arq, "%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
+    
+    while(fscanf(arq, "%[ ^], %[ ^], %[ \n]", gr->nro_vertices, gr->grau_max, gr->eh_ponderado) != EOF) {
+        
+    }
      
 }
