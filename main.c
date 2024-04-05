@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include "ArvoreBin.h"
 #include "Grafo.h"
+#include "Jogo.h"
 
 int main(){
+
+    Jogador jg[100]; //vetor estatico para facilitar a manipulação de dados, caso seja necessario pode-se fazer alocado dinamicamente
 
     /*short esc = 0, esc_jogo = 0;
     char esc_s;
