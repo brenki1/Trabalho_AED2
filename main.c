@@ -68,19 +68,20 @@ int main(){
     }while((esc < 1) || (esc > 3));
 */
   
-    Grafo *gr = cria_Grafo(7, 3, 0);
+    Grafo *gr = carregaGrafoDoArquivo("Grafonv4.txt");
+    Grafo *gr2 = carregaGrafoDoArquivo("Grafonv3.txt");
+    Grafo *gr3 = carregaGrafoDoArquivo("Grafonv2.txt");
+    Grafo *gr4 = carregaGrafoDoArquivo("Grafonv1.txt");
 
-    insereAresta(gr, 0, 1, 1, 0);
-    insereAresta(gr, 0, 3, 1, 0);
-    insereAresta(gr, 1, 2, 1, 0);
-    insereAresta(gr, 2, 6, 1, 0);
-    insereAresta(gr, 2, 5, 1, 0);
-    insereAresta(gr, 2, 4, 1, 0);
-    insereAresta(gr, 3, 4, 1, 0);
-    insereAresta(gr, 5, 6, 1, 0);
-    
+    ArvBin* raiz = cria_ArvBin();
 
-    FILE *arq = criaArquivo(gr);
+    insere_ArvBin(raiz, gr);
+    insere_ArvBin(raiz, gr2);
+    insere_ArvBin(raiz, gr3);
+    insere_ArvBin(raiz, gr4);
+
+
+    posOrdem_ArvBin(raiz);
   
 
     return 0;

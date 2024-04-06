@@ -202,3 +202,27 @@ Grafo* carregaGrafoDoArquivo(const char* nomeArquivo) {
     fclose(arq);
     return gr;
 }
+
+void imprimeGrafo(Grafo* gr) {
+    if (gr == NULL) {
+        printf("Grafo nao existe.\n");
+        return;
+    }
+
+    printf("Numero de vertices: %d\n", gr->nro_vertices);
+    printf("Grau maximo: %d\n", gr->grau_max);
+    printf("Eh ponderado: %s\n", gr->eh_ponderado ? "Sim" : "Nao");
+
+    printf("Arestas:\n");
+    for (int i = 0; i < gr->nro_vertices; i++) {
+        printf("%d: ", i);
+        for (int j = 0; j < gr->grau[i]; j++) {
+            if (gr->eh_ponderado) {
+                printf("(%d, %.2f) ", gr->arestas[i][j], gr->pesos[i][j]);
+            } else {
+                printf("%d ", gr->arestas[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}

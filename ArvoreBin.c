@@ -1,12 +1,16 @@
 #include "ArvoreBin.h"
+#include "Grafo.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 struct NO {
-    int info;
+    Grafo* info;
     struct NO *esq;
     struct NO *dir;
 };
+
+
+
 
 ArvBin* cria_ArvBin() {
     ArvBin* raiz = (ArvBin*)malloc(sizeof(ArvBin));
@@ -59,7 +63,7 @@ void preOrdem_ArvBin(ArvBin *raiz) {
     if(raiz == NULL)
         return;
     if(*raiz != NULL) {
-        printf("%d\n", (*raiz)->info);
+        imprimeGrafo((*raiz)->info);
         preOrdem_ArvBin(&((*raiz)->esq));
         preOrdem_ArvBin(&((*raiz)->dir));
     }
@@ -70,7 +74,7 @@ void emOrdem_ArvBin(ArvBin *raiz) {
         return;
     if(*raiz != NULL) {
         emOrdem_ArvBin(&((*raiz)->esq));
-        printf("%d\n", (*raiz)->info);
+        imprimeGrafo((*raiz)->info);
         emOrdem_ArvBin(&((*raiz)->dir));
     }
 }
@@ -81,11 +85,11 @@ void posOrdem_ArvBin(ArvBin *raiz) {
     if(*raiz != NULL) {
         posOrdem_ArvBin(&((*raiz)->esq));
         posOrdem_ArvBin(&((*raiz)->dir));
-        printf("%d\n", (*raiz)->info);
+        imprimeGrafo((*raiz)->info);
     }
 }
 
-int insere_ArvBin(ArvBin* raiz, int valor) {
+int insere_ArvBin(ArvBin* raiz, Grafo* valor) {
     if(raiz == NULL)
         return 0;
     struct NO* novo;
@@ -113,7 +117,7 @@ int insere_ArvBin(ArvBin* raiz, int valor) {
             else
                 atual = atual->esq;
         }
-        if(valor > ant->info)
+        if(valor->nro_vertices > ant->info->nro_vertices)
             ant->dir = novo;
         else
             ant->esq = novo;
@@ -121,7 +125,7 @@ int insere_ArvBin(ArvBin* raiz, int valor) {
     return 1;
 }
 
-int consulta_ArvBin(ArvBin *raiz, int valor) {
+int consulta_ArvBin(ArvBin *raiz, Grafo* valor) {
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
@@ -129,7 +133,7 @@ int consulta_ArvBin(ArvBin *raiz, int valor) {
         if(valor == atual->info) {
             return 1;
         }
-        if(valor > atual->info)
+        if(valor->nro_vertices > atual->info->nro_vertices)
             atual = atual->dir;
         else
             atual = atual->esq;
@@ -137,7 +141,7 @@ int consulta_ArvBin(ArvBin *raiz, int valor) {
     return 0;
 }
 
-int remove_ArvBin(ArvBin *raiz, int valor) {
+int remove_ArvBin(ArvBin *raiz, Grafo* valor) {
     if(raiz == NULL) return 0;
     struct NO* ant = NULL;
     struct NO* atual = *raiz;
@@ -154,7 +158,7 @@ int remove_ArvBin(ArvBin *raiz, int valor) {
             return 1;
         }
         ant = atual;
-        if(valor > atual->info)
+        if(valor->nro_vertices > atual->info->nro_vertices)
             atual = atual->dir;
         else 
             atual = atual->esq;
@@ -184,3 +188,5 @@ struct NO* remove_atual(struct NO* atual) {
     free(atual);
     return no2;
 }
+
+

@@ -1,3 +1,8 @@
+#ifndef GRAFO_H
+#define GRAFO_H
+
+#include <stdio.h>
+
 //Definição do tipo Grafo
 typedef struct grafo{
     int eh_ponderado;
@@ -28,3 +33,7 @@ int procuraMenorDistancia(float *dist, int *visitado, int NV);
 
 FILE *criaArquivo(Grafo *gr);
 Grafo* carregaGrafoDoArquivo(const char* nomeArquivo);
+
+void imprimeGrafo(Grafo *gr);
+
+#endif //GRAFO_H
