@@ -46,6 +46,24 @@ int insereAresta(Grafo* gr, int orig, int dest, int eh_digrafo, float peso){
     return 1;
 }
 
+void libera_Grafo(Grafo *gr) {
+    if(gr != NULL) {
+        int i;
+        for(i = 0; i<gr->nro_vertices; i++)
+            free(gr->arestas[i]);
+        free(gr->arestas);
+
+        if(gr->eh_ponderado) {
+            for(i = 0; i<gr->nro_vertices; i++)
+                free(gr->pesos[i]);
+            free(gr->pesos);
+        }
+
+        free(gr->grau);
+        free(gr);
+    }
+}
+
 void buscaProfundidade(Grafo *gr, int ini, int *visitado, int cont){
 
     int i;
