@@ -248,12 +248,12 @@ void jogar(Jogador *j) {
     
     if(derrota) {
         j->tempo_total = (double)(fim_geral - ini_area1) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
     } else if (avanco) {
         j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         nivel2(j, raiz);
     }
 
@@ -329,13 +329,13 @@ void nivel2(Jogador *j, ArvBin *raiz) {
     
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area2) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[1] = (double)(fim_area2 - ini_area2) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area2 - ini_area2) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         nivel3(j, raiz);
     }
 
@@ -407,13 +407,13 @@ void nivel3(Jogador *j, ArvBin *raiz) {
     
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area3) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area3 - ini_area3) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area3 - ini_area3) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         nivel4(j, raiz);
     }
 
@@ -486,13 +486,13 @@ void nivel4(Jogador *j, ArvBin *raiz) {
     
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area4) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area4 - ini_area4) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area4 - ini_area4) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         nivel5(j, raiz);
     }
 
@@ -564,13 +564,13 @@ void nivel5(Jogador *j, ArvBin *raiz) {
     
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area5) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area5 - ini_area5) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area5 - ini_area5) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         nivel6(j, raiz);
     }
 
@@ -642,13 +642,13 @@ void nivel6(Jogador *j, ArvBin *raiz) {
     
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area6) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area6 - ini_area6) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area6 - ini_area6) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
         areaCentral(j, raiz);
     }
 
@@ -722,14 +722,14 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
     
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area7) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
+        printf("\nTempo total!!: %.2f\n", j->tempo_total);
         menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
-        printf("Tempo total!!: %f", j->tempo_total);
-        menu_vitoria(j);
+        printf("Tempo total!!: %.2f\n", j->tempo_total);
+        //menu_vitoria(j);
     }
 
 }
