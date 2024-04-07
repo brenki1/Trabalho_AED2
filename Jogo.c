@@ -149,9 +149,6 @@ void menu_principal(Jogador *j) {
 
 void jogar(Jogador *j) {
 
-    FILE *fr;
-
-    Jogador *rank_temp = (Jogador *) malloc(10*sizeof(Jogador));
     j->tempo_total = 0;
 
     int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
@@ -165,25 +162,19 @@ void jogar(Jogador *j) {
     Grafo *gr4 = carregaGrafoDoArquivo("Grafonv2.txt");
     Grafo *gr5 = carregaGrafoDoArquivo("Grafonv5.txt");
     Grafo *gr6 = carregaGrafoDoArquivo("Grafonv6.txt");
-    Grafo *areacentral = carregaGrafoDoArquivo("Grafonv7.txt");
+    Grafo *grAreacentral = carregaGrafoDoArquivo("Grafonv7.txt");
 
 
     //Inserindo as áreas na ávore
     ArvBin* raiz = cria_ArvBin();
 
-    insere_ArvBin(raiz, areacentral);
+    insere_ArvBin(raiz, grAreacentral);
     insere_ArvBin(raiz, gr3);
     insere_ArvBin(raiz, gr);
     insere_ArvBin(raiz, gr2);
     insere_ArvBin(raiz, gr6);
     insere_ArvBin(raiz, gr4);
     insere_ArvBin(raiz, gr5);
-
-    if(checkRanking == 0) {
-        fr = criaRanking();
-    } else carregaRanking(rank_temp, fr);
-
-    printf("GRAU DO GRAFO ATUAL, VERTICE 0!! %d\n", gr->grau[0]);
 
     time_t ini_area1 = clock();
     for(i = 0; i < gr->nro_vertices; i++) {
@@ -258,7 +249,7 @@ void jogar(Jogador *j) {
     if(derrota) {
         j->tempo_total = (double)(fim_geral - ini_area1) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
     } else if (avanco) {
         j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
@@ -276,25 +267,15 @@ void nivel2(Jogador *j, ArvBin *raiz) {
     char esc_avanco = 'N';
     int vert_avanco;
 
+    pesquisa_ArvBin(raiz, 3);
+
+    Grafo *gr2 = pesquisa_ArvBin(raiz, 3);
+
     time_t ini_area2 = clock();
     for(i = 0; i < gr2->nro_vertices; i++) {
         
         if((gr2->grau[vert_atual] == 0) && vert_atual != (gr2->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
-            remove_ArvBin(raiz, gr);
-            remove_ArvBin(raiz, gr2);
-            remove_ArvBin(raiz, gr3);
-            remove_ArvBin(raiz, gr4);
-            remove_ArvBin(raiz, gr5);
-            remove_ArvBin(raiz, gr6);
-            //remove_ArvBin(raiz, areacentral);
-            libera_Grafo(gr);
-            libera_Grafo(gr2);
-            libera_Grafo(gr3);
-            libera_Grafo(gr4);
-            libera_Grafo(gr5);
-            libera_Grafo(gr6);
-            //libera_Grafo(areacentral);
             derrota = 1;
             break;
         }
@@ -349,7 +330,7 @@ void nivel2(Jogador *j, ArvBin *raiz) {
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area2) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[1] = (double)(fim_area2 - ini_area2) / CLOCKS_PER_SEC;
@@ -366,25 +347,13 @@ void nivel3(Jogador *j, ArvBin *raiz) {
     char esc_avanco = 'N';
     int vert_avanco;
 
+    Grafo *gr3 = pesquisa_ArvBin(raiz, 2);
+
     time_t ini_area3 = clock();
     for(i = 0; i < gr3->nro_vertices; i++) {
         
         if((gr3->grau[vert_atual] == 0) && vert_atual != (gr3->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
-            remove_ArvBin(raiz, gr);
-            remove_ArvBin(raiz, gr2);
-            remove_ArvBin(raiz, gr3);
-            remove_ArvBin(raiz, gr4);
-            remove_ArvBin(raiz, gr5);
-            remove_ArvBin(raiz, gr6);
-            //remove_ArvBin(raiz, areacentral);
-            libera_Grafo(gr);
-            libera_Grafo(gr2);
-            libera_Grafo(gr3);
-            libera_Grafo(gr4);
-            libera_Grafo(gr5);
-            libera_Grafo(gr6);
-            //libera_Grafo(areacentral);
             derrota = 1;
             break;
         }
@@ -439,7 +408,7 @@ void nivel3(Jogador *j, ArvBin *raiz) {
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area3) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area3 - ini_area3) / CLOCKS_PER_SEC;
@@ -457,25 +426,13 @@ void nivel4(Jogador *j, ArvBin *raiz) {
     char esc_avanco = 'N';
     int vert_avanco;
 
+    Grafo *gr4 = pesquisa_ArvBin(raiz, 5);
+
     time_t ini_area4 = clock();
     for(i = 0; i < gr4->nro_vertices; i++) {
         
         if((gr4->grau[vert_atual] == 0) && vert_atual != (gr4->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
-            remove_ArvBin(raiz, gr);
-            remove_ArvBin(raiz, gr2);
-            remove_ArvBin(raiz, gr3);
-            remove_ArvBin(raiz, gr4);
-            remove_ArvBin(raiz, gr5);
-            remove_ArvBin(raiz, gr6);
-            //remove_ArvBin(raiz, areacentral);
-            libera_Grafo(gr);
-            libera_Grafo(gr2);
-            libera_Grafo(gr3);
-            libera_Grafo(gr4);
-            libera_Grafo(gr5);
-            libera_Grafo(gr6);
-            //libera_Grafo(areacentral);
             derrota = 1;
             break;
         }
@@ -530,7 +487,7 @@ void nivel4(Jogador *j, ArvBin *raiz) {
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area4) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area4 - ini_area4) / CLOCKS_PER_SEC;
@@ -547,25 +504,13 @@ void nivel5(Jogador *j, ArvBin *raiz) {
     char esc_avanco = 'N';
     int vert_avanco;
 
+    Grafo *gr5 = pesquisa_ArvBin(raiz, 7);
+
     time_t ini_area5 = clock();
     for(i = 0; i < gr5->nro_vertices; i++) {
         
         if((gr5->grau[vert_atual] == 0) && vert_atual != (gr5->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
-            remove_ArvBin(raiz, gr);
-            remove_ArvBin(raiz, gr2);
-            remove_ArvBin(raiz, gr3);
-            remove_ArvBin(raiz, gr4);
-            remove_ArvBin(raiz, gr5);
-            remove_ArvBin(raiz, gr6);
-            //remove_ArvBin(raiz, areacentral);
-            libera_Grafo(gr);
-            libera_Grafo(gr2);
-            libera_Grafo(gr3);
-            libera_Grafo(gr4);
-            libera_Grafo(gr5);
-            libera_Grafo(gr6);
-            //libera_Grafo(areacentral);
             derrota = 1;
             break;
         }
@@ -620,7 +565,7 @@ void nivel5(Jogador *j, ArvBin *raiz) {
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area5) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area5 - ini_area5) / CLOCKS_PER_SEC;
@@ -637,25 +582,13 @@ void nivel6(Jogador *j, ArvBin *raiz) {
     char esc_avanco = 'N';
     int vert_avanco;
 
+    Grafo *gr6 = pesquisa_ArvBin(raiz, 6);
+
     time_t ini_area6 = clock();
     for(i = 0; i < gr6->nro_vertices; i++) {
         
         if((gr6->grau[vert_atual] == 0) && vert_atual != (gr6->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
-            remove_ArvBin(raiz, gr);
-            remove_ArvBin(raiz, gr2);
-            remove_ArvBin(raiz, gr3);
-            remove_ArvBin(raiz, gr4);
-            remove_ArvBin(raiz, gr5);
-            remove_ArvBin(raiz, gr6);
-            //remove_ArvBin(raiz, areacentral);
-            libera_Grafo(gr);
-            libera_Grafo(gr2);
-            libera_Grafo(gr3);
-            libera_Grafo(gr4);
-            libera_Grafo(gr5);
-            libera_Grafo(gr6);
-            //libera_Grafo(areacentral);
             derrota = 1;
             break;
         }
@@ -710,7 +643,7 @@ void nivel6(Jogador *j, ArvBin *raiz) {
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area6) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area6 - ini_area6) / CLOCKS_PER_SEC;
@@ -729,25 +662,13 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
     char esc_avanco = 'N';
     int vert_avanco;
 
+    Grafo *grAreacentral = pesquisa_ArvBin(raiz, 4);
+
     time_t ini_area7 = clock();
     for(i = 0; i < grAreacentral->nro_vertices; i++) {
         
         if((grAreacentral->grau[vert_atual] == 0) && vert_atual != (grAreacentral->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
-            remove_ArvBin(raiz, gr);
-            remove_ArvBin(raiz, gr2);
-            remove_ArvBin(raiz, gr3);
-            remove_ArvBin(raiz, gr4);
-            remove_ArvBin(raiz, gr5);
-            remove_ArvBin(raiz, gr6);
-            //remove_ArvBin(raiz, areacentral);
-            libera_Grafo(gr);
-            libera_Grafo(gr2);
-            libera_Grafo(gr3);
-            libera_Grafo(gr4);
-            libera_Grafo(gr5);
-            libera_Grafo(gr6);
-            //libera_Grafo(areacentral);
             derrota = 1;
             break;
         }
@@ -802,13 +723,33 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
     if(derrota) {
         j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area7) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        menu_principal(j);
+        menu_derrota(j);
 
     } else if (avanco) {
         j->tempo_area[2] = (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %f", j->tempo_total);
-        nivel6(j, raiz);
+        menu_vitoria(j);
     }
+
+}
+
+menu_derrota(Jogador *j) {
+
+    int esc_retry; FILE *ranking; int verif; Jogador *temp = (Jogador *) malloc(10*sizeof(Jogador));
+
+    printf("Voce perdeu, mas pode tentar novamente! Basta digitar 1 para tentar novamente, ou 2 para sair\n");
+    scanf("%i", &esc_retry);
+    setbuf(stdin,NULL);
+
+    if(esc_retry){
+        jogar(j);
+    } else if(esc_retry == 2) {
+        j = NULL;
+        free(j);
+        menu_principal(j);
+    }
+
+
 
 }
