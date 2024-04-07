@@ -164,6 +164,7 @@ void jogar(Jogador *j) {
     Grafo *gr3 = carregaGrafoDoArquivo("Grafonv3.txt");
     Grafo *gr4 = carregaGrafoDoArquivo("Grafonv2.txt");
     Grafo *gr5 = carregaGrafoDoArquivo("Grafonv5.txt");
+    Grafo *gr6 = carregaGrafoDoArquivo("Grafonv6.txt");
 
     //Inserindo as áreas na ávore
     ArvBin* raiz = cria_ArvBin();
@@ -173,12 +174,12 @@ void jogar(Jogador *j) {
     insere_ArvBin(raiz, gr3);
     insere_ArvBin(raiz, gr4);
     insere_ArvBin(raiz, gr5);
+    insere_ArvBin(raiz, gr6);
 
     if(checkRanking == 0) {
         fr = criaRanking();
     } else carregaRanking(rank_temp, fr);
 
-    printf("GRAU DO GRAFO ATUAL, VERTICE 0!! %d\n", gr->grau[0]);
 
     
     for(i = 0; i < gr->nro_vertices; i++) {
@@ -190,14 +191,14 @@ void jogar(Jogador *j) {
             remove_ArvBin(raiz, gr3);
             remove_ArvBin(raiz, gr4);
             remove_ArvBin(raiz, gr5);
-            //remove_ArvBin(raiz, gr6);
+            remove_ArvBin(raiz, gr6);
             //remove_ArvBin(raiz, areacentral);
             libera_Grafo(gr);
             libera_Grafo(gr2);
             libera_Grafo(gr3);
             libera_Grafo(gr4);
             libera_Grafo(gr5);
-            //libera_Grafo(gr6);
+            libera_Grafo(gr6);
             //libera_Grafo(areacentral);
             time_t fim_geral;
             j->tempo_total = (double)(fim_geral - ini_area1) / CLOCKS_PER_SEC;
