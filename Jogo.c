@@ -154,6 +154,7 @@ void jogar(Jogador *j) {
 
     int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco;
+    int vert_avanco;
 
     //Carregando áreas/grafos
     Grafo *gr = carregaGrafoDoArquivo("Grafonv4.txt");
@@ -175,9 +176,9 @@ void jogar(Jogador *j) {
 
     printf("GRAU DO GRAFO ATUAL, VERTICE 0!! %d\n", gr->grau[0]);
 
-    for(i = 0; i < gr->grau_max; i++) {
+    for(i = 0; i < gr->nro_vertices; i++) {
 
-        if((gr->grau[vert_atual] == 0) && vert_atual != gr->grau_max) {
+        if((gr->grau[vert_atual] == 0) && vert_atual != (gr->grau_max - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
             menu_principal(j);
         }
@@ -197,21 +198,22 @@ void jogar(Jogador *j) {
             }
             
         } else if(gr->grau[vert_atual] > 1) {
-            while((esc_avanco != 'E' && esc_avanco != 'D')) {
-                printf("Ha %d salas a frente, deseja ir para E ou D?\n", gr->grau[vert_atual]); 
-                scanf("%c", &esc_avanco);
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", gr->grau[vert_atual]); 
+                for(int j = 0; j < gr->grau[vert_atual]; j++) {
+                    if(j == (gr->grau[vert_atual] - 1))
+                        printf("ou %d? ", gr->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", gr->arestas[vert_atual][j]);
+                }
                 setbuf(stdin,NULL);
+                scanf("%d", &vert_avanco);
             }
+            while(vert_avanco < 0 && vert_avanco > gr->grau[vert_atual]);
 
-            if((esc_avanco == 'D')||(esc_avanco == 'd')) {
-                vert_atual = gr->arestas[vert_atual][1];
+            
 
-            }
-
-            if((esc_avanco == 'E')||(esc_avanco == 'e')) {
-                vert_atual = gr->arestas[vert_atual][0];
-
-            }
+            vert_atual = vert_avanco;
         }
 
         esc_avanco = 'N';
