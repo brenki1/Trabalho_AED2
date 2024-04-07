@@ -102,13 +102,13 @@ void menu_principal(Jogador *j) {
 
     do{
 
-        printf("\t\n --- BEM VINDO(A) AO LABIRINTO ---\t\n\n1) Jogar \n2) Sobre \n3) Sair \n");
+        printf("\t\n --- BEM VINDO(A) AO LABIRINTO ---\t\n\n1) Jogar \n2) Sobre \n3) Exibir o ranking \n4) Sair\n");
         scanf("%i", &esc);
         setbuf(stdin,NULL);
 
         if(esc == 1){
             //escolha de dificuldade e então o jogo em si
-            printf("Insira seu nome! (Max 100 caracteres): \n");
+            printf("Insira seu nome! (Max 100 caracteres e sem espacos!): \n");
             fgets(j->nome, 100, stdin);
             int tam_s = strlen(j->nome);
             j->nome[tam_s - 1] = '\0';
@@ -140,8 +140,13 @@ void menu_principal(Jogador *j) {
             setbuf(stdin, NULL);
             esc = 0;
         }
+
+        if(esc == 3) {
+            exibeRanking();
+            esc = 0;
+        }
         
-        if(esc == 3){
+        if(esc == 4){
             printf("Tem certeza que deseja sair? (S/N)\n");
             scanf("%c", &esc_s);
             setbuf(stdin,NULL);
@@ -156,11 +161,11 @@ void menu_principal(Jogador *j) {
             
         }
 
-        if((esc < 1) || (esc > 3)) {
+        if((esc < 1) || (esc > 4)) {
             printf("Opcao invalida! Por favor escolha uma das opcoes no menu!\n");
         }
 
-    }while((esc < 1) || (esc > 3));
+    }while((esc < 1) || (esc > 4));
 }
 
 void jogar(Jogador *j) {
@@ -890,16 +895,16 @@ void exibeRanking() {
 
     arq = fopen("Ranking.txt","r");
 
-    while(fscanf(arq, "%[^ ] %lf %d", vet[i].nome, &vet[i].tempo_total, &vet[i].pontuacao) != EOF) {
+    while(fscanf(arq, "%[^ ] %lf %d\n", vet[i].nome, &vet[i].tempo_total, &vet[i].pontuacao) != EOF) {
         i++;
     }
 
-    quick_sort(vet, 0, 10);
+    quick_sort(vet, 0, i);
 
     printf("\tRanking de jogadores em ordem crescente - criterio: Pontuacao\n");
     printf("\n\tNome / tempo total / pontuacao \n");
-    for(i = 0; i < 10; i++) {
-        printf("%s    %lf    %d", vet[i].nome, vet[i].tempo_total, vet[i].pontuacao);
+    for(int j = 0; j < i; j++) {
+        printf("%s    %lf    %d", vet[j].nome, vet[j].tempo_total, vet[j].pontuacao);
         printf("\n");
     }
 }
