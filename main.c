@@ -6,6 +6,12 @@
 
 int main(){
 
+    int verif = checkRanking(); FILE *rTEMP;
+
+    if(verif == 0) {
+        criaRanking(rTEMP);
+    }
+
     Jogador *atual = (Jogador *) malloc(sizeof(Jogador));
 
     menu_principal(atual);
