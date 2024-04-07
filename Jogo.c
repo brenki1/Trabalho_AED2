@@ -210,11 +210,6 @@ void jogar(Jogador *j) {
             printf("Parabens! Voce avancou de area! \n");
             avanco = 1;
             break;
-            time_t fim_area1;
-            j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
-            j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
-            printf(" tempo total!!: %f", j->tempo_total);
-            //nivel2(j);
         }
 
         printf("Voce esta na sala %d\n", vert_atual);
