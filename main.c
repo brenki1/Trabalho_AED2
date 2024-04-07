@@ -12,6 +12,8 @@ int main(){
         criaRanking(rTEMP);
     }
 
+    exibeRanking();
+
     Jogador *atual = (Jogador *) malloc(sizeof(Jogador));
 
     menu_principal(atual);

@@ -51,7 +51,7 @@ int carregaRanking(Fila *j, FILE *jf) {
     }
 
 
-    while(fscanf(jf, "%[^ ] %f %d\n", aux.nome, &aux.tempo_total, &aux.pontuacao) != EOF) {
+    while(fscanf(jf, "%[^ ] %lf %d\n", aux.nome, &aux.tempo_total, &aux.pontuacao) != EOF) {
         inserir(j, aux);
         //operacoes caso seja necessario
     }
@@ -83,7 +83,7 @@ int salvaRanking(Fila *jg, Jogador *j, FILE *jf) {
     q = jg->qtd;
 
     while(q > 0) { 
-        fprintf(jf, "%s %f %d\n", jg->valores[i].nome, jg->valores[i].tempo_total, jg->valores[i].pontuacao);
+        fprintf(jf, "%s %lf %d\n", jg->valores[i].nome, jg->valores[i].tempo_total, jg->valores[i].pontuacao);
         i = (i+1) % MAX;
         q--; 
     }
@@ -865,7 +865,7 @@ int particiona(Jogador vet[], int inicio, int fim)
   return pivo_indice;
 }
 
-int particiona_random(int vet[], int inicio, int fim)
+int particiona_random(Jogador vet[], int inicio, int fim)
 {
   int pivo_indice = (rand() % (fim - inicio + 1)) + inicio;
 
@@ -873,7 +873,7 @@ int particiona_random(int vet[], int inicio, int fim)
   return particiona(vet, inicio, fim);
 }
 
-void quick_sort(int vet[], int inicio, int fim)
+void quick_sort(Jogador vet[], int inicio, int fim)
 {
   if(inicio < fim)
   {
@@ -888,7 +888,9 @@ void exibeRanking() {
     FILE *arq; Jogador vet[10];
     int i = 0;
 
-    while(fscanf(arq, "%[^ ] %f %d", vet[i].nome, &vet[i].tempo_total, &vet[i].pontuacao)) {
+    arq = fopen("Ranking.txt","r");
+
+    while(fscanf(arq, "%[^ ] %lf %d", vet[i].nome, &vet[i].tempo_total, &vet[i].pontuacao) != EOF) {
         i++;
     }
 
@@ -897,7 +899,7 @@ void exibeRanking() {
     printf("\tRanking de jogadores em ordem crescente - criterio: Pontuacao\n");
     printf("\n\tNome / tempo total / pontuacao \n");
     for(i = 0; i < 10; i++) {
-        printf("%s    %f    %d", vet[i].nome, vet[i].tempo_total, vet[i].pontuacao);
+        printf("%s    %lf    %d", vet[i].nome, vet[i].tempo_total, vet[i].pontuacao);
         printf("\n");
     }
 }
