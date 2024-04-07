@@ -2,8 +2,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Jogo.h"
+#include "Grafo.h"
+#include "ArvoreBin.h"
 
-FILE *criaRanking(Jogador *j) {
+int checkRanking() {
+    FILE *p;
+
+    if((p = fopen("Ranking.txt", "r")) == NULL) {
+        return 0;
+    }
+
+    return 1;
+    
+}
+
+FILE *criaRanking() {
 
     FILE *arq;
 
@@ -84,7 +97,7 @@ void menu_principal(Jogador *j) {
             j->nome[tam_s - 1] = '\0';
             setbuf(stdin, NULL);
 
-            printf("\n1) Começar");
+            printf("\n Pressione 1 para começar! \n");
             scanf("%i", &esc_jogo);
             setbuf(stdin, NULL);
             //jogar();
@@ -131,4 +144,37 @@ void menu_principal(Jogador *j) {
         }
 
     }while((esc < 1) || (esc > 3));
+}
+
+void jogar(Jogador *j) {
+
+    FILE *fr;
+
+    Jogador *rank_temp = (Jogador *) malloc(10*sizeof(Jogador));
+
+    int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i;
+
+    //Carregando áreas/grafos
+    Grafo *gr = carregaGrafoDoArquivo("Grafonv4.txt");
+    Grafo *gr2 = carregaGrafoDoArquivo("Grafonv3.txt");
+    Grafo *gr3 = carregaGrafoDoArquivo("Grafonv2.txt");
+    Grafo *gr4 = carregaGrafoDoArquivo("Grafonv1.txt");
+
+    //Inserindo as áreas na ávore
+    ArvBin* raiz = cria_ArvBin();
+
+    insere_ArvBin(raiz, gr);
+    insere_ArvBin(raiz, gr2);
+    insere_ArvBin(raiz, gr3);
+    insere_ArvBin(raiz, gr4);
+
+    if(checkRanking == 0) {
+        fr = criaRanking();
+    } else carregaRanking(rank_temp, fr);
+
+    for(i = 0; i < gr->arestas[vert_atual][i]; i++) {
+        printf("Você esta na sala %d");
+        
+    }
+
 }

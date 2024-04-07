@@ -9,11 +9,12 @@ typedef struct jogador {
 } Jogador;
 
 //operações com arquivo
-FILE *criaRanking(Jogador *j);
+int checkRanking();
+FILE *criaRanking();
 int carregaRanking(Jogador *j, FILE *jf);
 int salvaRanking(Jogador *j, FILE *jf);
 
 void menu_principal(Jogador *j);
-void jogar();
+void jogar(Jogador *j);
 
 #endif //JOGO_H
