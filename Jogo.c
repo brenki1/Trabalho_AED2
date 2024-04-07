@@ -198,28 +198,18 @@ void jogar(Jogador *j) {
             
         } else if(gr->grau[vert_atual] > 1) {
             while((esc_avanco != 'E' && esc_avanco != 'D')) {
-                printf("Ha %d salas a frente, deseja ir para E ou D?\n", gr->grau[vert_atual]); // E = esquerda, numero impar, D = direita, numero par
+                printf("Ha %d salas a frente, deseja ir para E ou D?\n", gr->grau[vert_atual]); 
                 scanf("%c", &esc_avanco);
                 setbuf(stdin,NULL);
             }
 
             if((esc_avanco == 'D')||(esc_avanco == 'd')) {
-                if(((vert_atual+1) % 2) == 0) {
-                    vert_atual++;
-
-                } else if(((vert_atual+2) % 2) == 0) {
-                    vert_atual += 2;
-                }
+                vert_atual = gr->arestas[vert_atual][1];
 
             }
 
             if((esc_avanco == 'E')||(esc_avanco == 'e')) {
-                if(((vert_atual+1) % 2) != 0) {
-                    vert_atual++;
-
-                } else if(((vert_atual+2) % 2) != 0) {
-                    vert_atual += 2;
-                }
+                vert_atual = gr->arestas[vert_atual][0];
 
             }
         }
