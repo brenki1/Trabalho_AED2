@@ -83,7 +83,7 @@ int salvaRanking(Fila *jg, Jogador *j, FILE *jf) {
     q = jg->qtd;
 
     while(q > 0) { 
-        fprintf(jf, "%s %f %d", jg->valores[i].nome, jg->valores[i].tempo_total, jg->valores[i].pontuacao);
+        fprintf(jf, "%s %f %d\n", jg->valores[i].nome, jg->valores[i].tempo_total, jg->valores[i].pontuacao);
         i = (i+1) % MAX;
         q--; 
     }
@@ -832,4 +832,72 @@ int consultar(Fila *f, Jogador *it){
     if (filaVazia(f) == 0)  return 1;
     *it = f->valores[f->inicio];
     return 0;
+}
+
+void troca(Jogador vet[], int i, int j)
+{
+  Jogador aux = vet[i];
+  vet[i] = vet[j];
+  vet[j] = aux;
+}
+
+
+int particiona(Jogador vet[], int inicio, int fim)
+{
+  int pivo_indice, i;
+  Jogador pivo;
+
+  pivo = vet[fim]; 
+  pivo_indice = inicio;
+
+  for(i = inicio; i < fim; i++)
+  {
+  
+    if(vet[i].pontuacao <= pivo.pontuacao)
+    {
+      troca(vet, i, pivo_indice);
+      pivo_indice++;
+    }
+  }
+
+  troca(vet, pivo_indice, fim);
+
+  return pivo_indice;
+}
+
+int particiona_random(int vet[], int inicio, int fim)
+{
+  int pivo_indice = (rand() % (fim - inicio + 1)) + inicio;
+
+  troca(vet, pivo_indice, fim);
+  return particiona(vet, inicio, fim);
+}
+
+void quick_sort(int vet[], int inicio, int fim)
+{
+  if(inicio < fim)
+  {
+    int pivo_indice = particiona_random(vet, inicio, fim);
+
+    quick_sort(vet, inicio, pivo_indice - 1);
+    quick_sort(vet, pivo_indice + 1, fim);
+  }
+}
+
+void exibeRanking() {
+    FILE *arq; Jogador vet[10];
+    int i = 0;
+
+    while(fscanf(arq, "%[^ ] %f %d", vet[i].nome, &vet[i].tempo_total, &vet[i].pontuacao)) {
+        i++;
+    }
+
+    quick_sort(vet, 0, 10);
+
+    printf("\tRanking de jogadores em ordem crescente - criterio: Pontuacao\n");
+    printf("\n\tNome / tempo total / pontuacao \n");
+    for(i = 0; i < 10; i++) {
+        printf("%s    %f    %d", vet[i].nome, vet[i].tempo_total, vet[i].pontuacao);
+        printf("\n");
+    }
 }
