@@ -128,6 +128,7 @@ int insere_ArvBin(ArvBin* raiz, Grafo* valor) {
 int consulta_ArvBin(ArvBin *raiz, Grafo* valor) {
     if(raiz == NULL)
         return 0;
+        
     struct NO* atual = *raiz;
     while(atual != NULL){
         if(valor == atual->info) {
@@ -139,6 +140,50 @@ int consulta_ArvBin(ArvBin *raiz, Grafo* valor) {
             atual = atual->esq;
     }
     return 0;
+}
+
+Grafo* pesquisa_ArvBin(ArvBin *raiz, int valor) {
+    if(raiz == NULL)
+        return NULL;
+    int nro_vert;
+
+    switch(valor) 
+    {
+        case 1: 
+            nro_vert = 4;
+            break;
+        case 2:
+            nro_vert = 6;
+            break;
+        case 3: 
+            nro_vert = 5;
+            break;
+        case 4:
+            nro_vert = 10;
+            break;
+        case 5:
+            nro_vert = 7;
+            break;
+        case 6:
+            nro_vert = 9;
+            break;
+        case 7:
+            nro_vert = 8;
+            break;    
+    }
+    
+    struct NO* atual = *raiz;
+    while(atual != NULL){
+        if(valor == atual->info->ordemArvore) {
+            return atual->info;
+        }
+        if(valor > atual->info->ordemArvore)
+            atual = atual->dir;
+        else
+            atual = atual->esq;
+        
+        
+    }
 }
 
 int remove_ArvBin(ArvBin *raiz, Grafo* valor) {

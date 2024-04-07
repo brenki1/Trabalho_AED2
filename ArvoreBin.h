@@ -19,6 +19,7 @@ void posOrdem_ArvBin(ArvBin *raiz);
 
 int insere_ArvBin(ArvBin* raiz, Grafo* valor);
 int consulta_ArvBin(ArvBin *raiz, Grafo* valor);
+Grafo* pesquisa_ArvBin(ArvBin *raiz, int valor) ;
 
 int remove_ArvBin(ArvBin *raiz, Grafo* valor);
 struct NO* remove_atual(struct NO* atual);
