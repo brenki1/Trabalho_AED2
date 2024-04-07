@@ -153,7 +153,7 @@ void jogar(Jogador *j) {
     Jogador *rank_temp = (Jogador *) malloc(10*sizeof(Jogador));
 
     int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
-    char esc_avanco;
+    char esc_avanco = 'N';
     int vert_avanco;
 
     //Carregando áreas/grafos
@@ -200,8 +200,9 @@ void jogar(Jogador *j) {
         if(gr->grau[vert_atual] == 1) {
             while(esc_avanco == 'N') {
                 printf("Ha 1 sala a frente, avancar? (S/N)\n");
-                scanf("%c", &esc_avanco);
                 setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
 
                 if(esc_avanco == 'n') 
                     esc_avanco -= 32;
