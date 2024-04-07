@@ -15,6 +15,7 @@ int carregaRanking(Jogador *j, FILE *jf);
 int salvaRanking(Jogador *j, FILE *jf);
 
 void menu_principal(Jogador *j);
+void menu_derrota(Jogador *j);
 void jogar(Jogador *j);
 
 #endif //JOGO_H

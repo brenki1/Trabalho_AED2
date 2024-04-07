@@ -100,7 +100,7 @@ void menu_principal(Jogador *j) {
             printf("\n Pressione 1 para começar! \n");
             scanf("%i", &esc_jogo);
             setbuf(stdin, NULL);
-            //jogar();
+            jogar(j);
         }
 
         if(esc == 2){
@@ -152,7 +152,8 @@ void jogar(Jogador *j) {
 
     Jogador *rank_temp = (Jogador *) malloc(10*sizeof(Jogador));
 
-    int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i;
+    int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco;
 
     //Carregando áreas/grafos
     Grafo *gr = carregaGrafoDoArquivo("Grafonv4.txt");
@@ -172,9 +173,60 @@ void jogar(Jogador *j) {
         fr = criaRanking();
     } else carregaRanking(rank_temp, fr);
 
-    for(i = 0; i < gr->arestas[vert_atual][i]; i++) {
-        printf("Você esta na sala %d");
-        
+    printf("GRAU DO GRAFO ATUAL, VERTICE 0!! %d\n", gr->grau[0]);
+
+    for(i = 0; i < gr->grau_max; i++) {
+
+        if((gr->grau[vert_atual] == 0) && vert_atual != gr->grau_max) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            menu_principal(j);
+        }
+
+        printf("Você esta na sala %d\n", vert_atual);
+        if(gr->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                scanf("%c", &esc_avanco);
+                setbuf(stdin, NULL);
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual++;
+                } 
+            }
+        }
+
+        if(gr->grau[vert_atual] > 1) {
+            while((esc_avanco != 'E' && esc_avanco != 'D')) {
+                printf("Ha %d salas a frente, deseja ir para E ou D?\n", gr->grau[vert_atual]); // E = esquerda, numero impar, D = direita, numero par
+                scanf("%c", &esc_avanco);
+                setbuf(stdin,NULL);
+            }
+
+            if((esc_avanco == 'D')||(esc_avanco == 'd')) {
+                if(((vert_atual+1) % 2) == 0) {
+                    vert_atual++;
+
+                } else if(((vert_atual+2) % 2) == 0) {
+                    vert_atual += 2;
+                }
+
+            }
+
+            if((esc_avanco == 'E')||(esc_avanco == 'e')) {
+                if(((vert_atual+1) % 2) != 0) {
+                    vert_atual++;
+
+                } else if(((vert_atual+2) % 2) != 0) {
+                    vert_atual += 2;
+                }
+
+            }
+        }
+
+        esc_avanco = 'N';
+
     }
 
 }

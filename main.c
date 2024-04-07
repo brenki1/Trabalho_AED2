@@ -16,7 +16,7 @@ int main(){
     Grafo *gr3 = carregaGrafoDoArquivo("Grafonv2.txt");
     Grafo *gr4 = carregaGrafoDoArquivo("Grafonv1.txt");
 
-    ArvBin* raiz = cria_ArvBin();
+    /*ArvBin* raiz = cria_ArvBin();
 
     insere_ArvBin(raiz, gr);
     insere_ArvBin(raiz, gr2);
@@ -25,7 +25,7 @@ int main(){
 
 
     posOrdem_ArvBin(raiz);
-  
+    */  
 
     return 0;
 }
