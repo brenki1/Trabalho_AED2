@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "Jogo.h"
 #include "Grafo.h"
 #include "ArvoreBin.h"
@@ -151,17 +152,18 @@ void jogar(Jogador *j) {
     FILE *fr;
 
     Jogador *rank_temp = (Jogador *) malloc(10*sizeof(Jogador));
+    j->tempo_total = 0;
 
     int nivel = 1, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
     int vert_avanco;
 
     //Carregando áreas/grafos
-    Grafo *gr = carregaGrafoDoArquivo("Grafonv5.txt");
+    Grafo *gr = carregaGrafoDoArquivo("Grafonv1.txt");
     Grafo *gr2 = carregaGrafoDoArquivo("Grafonv4.txt");
     Grafo *gr3 = carregaGrafoDoArquivo("Grafonv3.txt");
     Grafo *gr4 = carregaGrafoDoArquivo("Grafonv2.txt");
-    Grafo *gr5 = carregaGrafoDoArquivo("Grafonv1.txt");
+    Grafo *gr5 = carregaGrafoDoArquivo("Grafonv5.txt");
 
     //Inserindo as áreas na ávore
     ArvBin* raiz = cria_ArvBin();
@@ -178,24 +180,40 @@ void jogar(Jogador *j) {
 
     printf("GRAU DO GRAFO ATUAL, VERTICE 0!! %d\n", gr->grau[0]);
 
+    
     for(i = 0; i < gr->nro_vertices; i++) {
-
+        time_t ini_area1;
         if((gr->grau[vert_atual] == 0) && vert_atual != (gr->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            //remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
             libera_Grafo(gr);
             libera_Grafo(gr2);
             libera_Grafo(gr3);
             libera_Grafo(gr4);
             libera_Grafo(gr5);
             //libera_Grafo(gr6);
-            //libera_Grafo(gr7);
-
+            //libera_Grafo(areacentral);
+            time_t fim_geral;
+            j->tempo_total = (double)(fim_geral - ini_area1) / CLOCKS_PER_SEC;
+            printf(" tempo total!!: %f", j->tempo_total);
             menu_principal(j);
         }
 
         if((gr->grau[vert_atual] == 0) && vert_atual == (gr->nro_vertices - 1)) {
+        
             printf("Parabens! Voce avancou de area! \n");
-            break;
+            time_t fim_area1;
+            j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
+            j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
+            printf(" tempo total!!: %f", j->tempo_total);
+            //nivel2(j);
+            exit(1);
         }
 
         printf("Voce esta na sala %d\n", vert_atual);
