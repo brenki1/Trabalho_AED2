@@ -66,7 +66,7 @@ int salvaRanking(Jogador *j, FILE *jf) {
     }
 
 
-    while(fprintf(jf, "%s %lf %d\n", j[i].nome, j[i].tempo_total, j[i].pontuacao) != EOF) { //vetor de jogadores deverá ser ordenado no programa em tempo de execuçao
+    while(fprintf(jf, "%s %lf %d\n", j[i].nome, j[i].tempo_total, j[i].pontuacao) != EOF) { //vetor de jogadores deverá ser ordenado no programa em tempo de execucao
         i++;
         //operacoes caso seja necessario
     }
@@ -97,7 +97,7 @@ void menu_principal(Jogador *j) {
             j->nome[tam_s - 1] = '\0';
             setbuf(stdin, NULL);
 
-            printf("\n Pressione 1 para começar! \n");
+            printf("\n Pressione 1 para comecar! \n");
             scanf("%i", &esc_jogo);
             setbuf(stdin, NULL);
             jogar(j);
@@ -178,7 +178,7 @@ void jogar(Jogador *j) {
 
     for(i = 0; i < gr->nro_vertices; i++) {
 
-        if((gr->grau[vert_atual] == 0) && vert_atual != (gr->grau_max - 1)) {
+        if((gr->grau[vert_atual] == 0) && vert_atual != (gr->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
             libera_Grafo(gr);
             libera_Grafo(gr2);
@@ -191,12 +191,12 @@ void jogar(Jogador *j) {
             menu_principal(j);
         }
 
-        if((gr->grau[vert_atual] == 0) && vert_atual == gr->nro_vertices) {
+        if((gr->grau[vert_atual] == 0) && vert_atual == (gr->nro_vertices - 1)) {
             printf("Parabens! Voce avancou de area! \n");
             break;
         }
 
-        printf("Você esta na sala %d\n", vert_atual);
+        printf("Voce esta na sala %d\n", vert_atual);
         if(gr->grau[vert_atual] == 1) {
             while(esc_avanco == 'N') {
                 printf("Ha 1 sala a frente, avancar? (S/N)\n");
@@ -206,7 +206,7 @@ void jogar(Jogador *j) {
                 if(esc_avanco == 'n') 
                     esc_avanco -= 32;
                 else if((esc_avanco == 'S') || esc_avanco == 's') {
-                    vert_atual++;
+                    vert_atual = gr->arestas[vert_atual][0];
                 } 
             }
             
@@ -220,6 +220,7 @@ void jogar(Jogador *j) {
                         printf("%d, ", gr->arestas[vert_atual][j]);
                 }
                 setbuf(stdin,NULL);
+
                 scanf("%d", &vert_avanco);
             }
             while(vert_avanco < 0 && vert_avanco > gr->grau[vert_atual]);
