@@ -173,10 +173,11 @@ int procuraMenorDistancia(float *dist, int *visitado, int NV){
 }
 
 
-FILE *criaArquivo(Grafo *gr){
+FILE *criaArquivo(Grafo *gr, char *nomeArquivo){
     FILE *arq;
 
-    arq = fopen("Grafonv4.txt", "w+");
+
+    arq = fopen(nomeArquivo, "w+");
 
     fprintf(arq, "%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
 

@@ -32,7 +32,7 @@ int procuraMenorDistancia(float *dist, int *visitado, int NV);
 
 
 
-FILE *criaArquivo(Grafo *gr);
+FILE *criaArquivo(Grafo *gr, char *nomeArquivo);
 Grafo* carregaGrafoDoArquivo(const char* nomeArquivo);
 
 void imprimeGrafo(Grafo *gr);
