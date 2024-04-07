@@ -195,9 +195,8 @@ void jogar(Jogador *j) {
                     vert_atual++;
                 } 
             }
-        }
-
-        if(gr->grau[vert_atual] > 1) {
+            
+        } else if(gr->grau[vert_atual] > 1) {
             while((esc_avanco != 'E' && esc_avanco != 'D')) {
                 printf("Ha %d salas a frente, deseja ir para E ou D?\n", gr->grau[vert_atual]); // E = esquerda, numero impar, D = direita, numero par
                 scanf("%c", &esc_avanco);
