@@ -18,8 +18,9 @@ typedef struct jogador {
 //operações com arquivo
 int checkRanking();
 FILE *criaRanking();
-int carregaRanking(Jogador *j, FILE *jf);
-int salvaRanking(Jogador *j, FILE *jf);
+int carregaRanking(Fila *j, FILE *jf);
+int salvaRanking(Fila *jg, Jogador *j, FILE *jf);
+void exibeRanking();
 
 void menu_principal(Jogador *j);
 void menu_derrota(Jogador *j);
@@ -39,7 +40,16 @@ void saida(Jogador *j);
 //fila de jogadores
 Fila *criar();
 int filaVazia(Fila *f);
-int inserir(Fila *f, Jogador *it);
+int inserir(Fila *f, Jogador it);
 int remover(Fila *f);
+int filaCheia(Fila *f);
+int consultar(Fila *f, Jogador *it);
+
+//quicksort de ranking
+void troca(Jogador vet[], int i, int j);
+int particiona(Jogador vet[], int inicio, int fim);
+int particiona_random(Jogador vet[], int inicio, int fim);
+void quick_sort(Jogador vet[], int inicio, int fim);
+
 
 #endif //JOGO_H

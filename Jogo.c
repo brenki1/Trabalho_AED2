@@ -6,6 +6,11 @@
 #include "Grafo.h"
 #include "ArvoreBin.h"
 
+typedef struct fila {
+    int inicio, fim, qtd;
+    Jogador valores[MAX];
+}Fila;
+
 int checkRanking() {
     FILE *p;
 
@@ -34,9 +39,9 @@ FILE *criaRanking() {
 
 }
 
-int carregaRanking(Jogador *j, FILE *jf) {
+int carregaRanking(Fila *j, FILE *jf) {
 
-    int i = 0;
+    int i = 0; Jogador aux;
 
     if((jf = fopen("Ranking.txt", "r")) != NULL) {
         printf("Ranking de jogadores carregado com sucesso!\n");
@@ -45,8 +50,9 @@ int carregaRanking(Jogador *j, FILE *jf) {
         return -1;
     }
 
-    while(fscanf(jf, "%[^ ] %lf %d\n", j[i].nome, &j[i].tempo_total, &j[i].pontuacao) != EOF) {
-        i++;
+
+    while(fscanf(jf, "%[^ ] %lf %d\n", aux.nome, &aux.tempo_total, &aux.pontuacao) != EOF) {
+        inserir(j, aux);
         //operacoes caso seja necessario
     }
 
@@ -55,9 +61,9 @@ int carregaRanking(Jogador *j, FILE *jf) {
     return 0;
 }
 
-int salvaRanking(Jogador *j, FILE *jf) {
+int salvaRanking(Fila *jg, Jogador *j, FILE *jf) {
 
-    int i = 0;
+    int i, q;
 
     if((jf = fopen("Ranking.txt", "w+")) != NULL) {
         printf("Registro de ranking aberto com sucesso! Atualizando...\n");
@@ -66,10 +72,20 @@ int salvaRanking(Jogador *j, FILE *jf) {
         return -1;
     }
 
+    int verif = filaCheia(jg);
 
-    while(fprintf(jf, "%s %lf %d\n", j[i].nome, j[i].tempo_total, j[i].pontuacao) != EOF) { //vetor de jogadores deverá ser ordenado no programa em tempo de execucao
-        i++;
-        //operacoes caso seja necessario
+    if(verif == 0) {
+        remover(jg);
+        inserir(jg, *j);
+    }
+
+    i = jg->inicio;
+    q = jg->qtd;
+
+    while(q > 0) { 
+        fprintf(jf, "%s %lf %d\n", jg->valores[i].nome, jg->valores[i].tempo_total, jg->valores[i].pontuacao);
+        i = (i+1) % MAX;
+        q--; 
     }
 
     fclose(jf);
@@ -762,7 +778,7 @@ void menu_derrota(Jogador *j) {
     scanf("%i", &esc_retry);
     setbuf(stdin,NULL);
 
-    if(esc_retry){
+    if(esc_retry == 1){
         jogar(j);
     } else if(esc_retry == 2) {
         j = NULL;
@@ -770,6 +786,138 @@ void menu_derrota(Jogador *j) {
         menu_principal(j);
     }
 
+}
+
+void menu_vitoria(Jogador *j) {
+    Fila *jogadores; FILE *arqJ;
+
+    int verif = carregaRanking(jogadores, arqJ); int escolha;
+    salvaRanking(jogadores, j, arqJ);
+
+    printf("Parabens! Voce venceu com um total de %d ponto(s)\n", j->pontuacao);
+    printf("Deseja sair ou rejogar? 1 para sair, 2 para rejogar\n");
+    scanf("%i", &escolha);
+
+    if(escolha == 1) {
+        j = NULL;
+        free(j);
+        menu_principal(j);
+
+    } else if (escolha == 2) {
+        jogar(j);
+    }
+}
+
+Fila *criar() {
+    Fila *f = (Fila *) malloc(sizeof(Fila));
+    f->inicio = 0;
+    f->fim = 0;
+    f->qtd = 0;
+    return f;
+}
+
+int filaVazia(Fila *f) {
+    if(f == NULL) return 2;
+    if (f->qtd == 0)  return 0;
+    else return 1;
+}
+
+int inserir(Fila *f, Jogador it){
+    if(f == NULL) return 2;
+    if (filaCheia(f) == 0)  return 1;
+    f->valores[f->fim] = it;
+    f->fim = (f->fim + 1) % MAX;
+    f->qtd++;
+    return 0;
+}
+
+int remover(Fila *f){
+    if(f == NULL) return 2;
+    if (filaVazia(f) == 0)  return 1;
+    f->qtd--;
+    f->inicio = (f->inicio + 1) % MAX;
+    return 0;
+}
+
+int filaCheia(Fila *f){
+    if (f == NULL) return 2;
+    if (f->qtd == MAX) return 0;
+    else return 1;
+}
+
+int consultar(Fila *f, Jogador *it){
+    if(f == NULL) return 2;
+    if (filaVazia(f) == 0)  return 1;
+    *it = f->valores[f->inicio];
+    return 0;
+}
+
+void troca(Jogador vet[], int i, int j)
+{
+  Jogador aux = vet[i];
+  vet[i] = vet[j];
+  vet[j] = aux;
+}
 
 
+int particiona(Jogador vet[], int inicio, int fim)
+{
+  int pivo_indice, i;
+  Jogador pivo;
+
+  pivo = vet[fim]; 
+  pivo_indice = inicio;
+
+  for(i = inicio; i < fim; i++)
+  {
+  
+    if(vet[i].pontuacao <= pivo.pontuacao)
+    {
+      troca(vet, i, pivo_indice);
+      pivo_indice++;
+    }
+  }
+
+  troca(vet, pivo_indice, fim);
+
+  return pivo_indice;
+}
+
+int particiona_random(Jogador vet[], int inicio, int fim)
+{
+  int pivo_indice = (rand() % (fim - inicio + 1)) + inicio;
+
+  troca(vet, pivo_indice, fim);
+  return particiona(vet, inicio, fim);
+}
+
+void quick_sort(Jogador vet[], int inicio, int fim)
+{
+  if(inicio < fim)
+  {
+    int pivo_indice = particiona_random(vet, inicio, fim);
+
+    quick_sort(vet, inicio, pivo_indice - 1);
+    quick_sort(vet, pivo_indice + 1, fim);
+  }
+}
+
+void exibeRanking() {
+    FILE *arq; Jogador vet[10];
+    int i = 0;
+
+    arq = fopen("Ranking.txt","r");
+
+    while(fscanf(arq, "%[^ ] %lf %d", vet[i].nome, &vet[i].tempo_total, &vet[i].pontuacao) != EOF) {
+        i++;
+    }
+
+    quick_sort(vet, 0, 10);
+
+    printf("\tRanking de jogadores em ordem crescente - criterio: Pontuacao\n");
+    printf("\n\tNome / tempo total / pontuacao \n");
+    for(i = 0; i < 10; i++) {
+        printf("%s    %lf    %d", vet[i].nome, vet[i].tempo_total, vet[i].pontuacao);
+        printf("\n");
+    }
 }
