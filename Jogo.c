@@ -661,16 +661,30 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
     int nivel = 7, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
     int vert_avanco;
+    int salvaVertice;
 
     Grafo *grAreacentral = pesquisa_ArvBin(raiz, 4);
 
     time_t ini_area7 = clock();
-    for(i = 0; i < grAreacentral->nro_vertices; i++) {
+    for(i = 0; 1; i++){
         
-        if((grAreacentral->grau[vert_atual] == 0) && vert_atual != (grAreacentral->nro_vertices - 1)) {
+        if((grAreacentral->grau[vert_atual] == 0) && vert_atual != (grAreacentral->nro_vertices - 1) && j->pontuacao == 0) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
             derrota = 1;
             break;
+        }
+
+        else if((grAreacentral->grau[vert_atual] == 0) && vert_atual != (grAreacentral->nro_vertices - 1) && j->pontuacao > 0) {
+            printf("Voce chegou uma sala sem saida.. mas tem pontos para voltar! Deseja voltar? (S/N)\n");
+            setbuf(stdin, NULL);
+            scanf("%c", &esc_avanco);
+
+            if(esc_avanco == 'n') 
+                esc_avanco -= 32;
+            else if((esc_avanco == 'S') || esc_avanco == 's') {
+                j->pontuacao--;
+                vert_atual = salvaVertice;
+            } 
         }
 
         if((grAreacentral->grau[vert_atual] == 0) && vert_atual == (grAreacentral->nro_vertices - 1)) {
@@ -679,6 +693,7 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
             avanco = 1;
             break;
         }
+
 
         printf("Voce esta na sala %d\n", vert_atual);
         if(grAreacentral->grau[vert_atual] == 1) {
@@ -713,6 +728,11 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
             
 
             vert_atual = vert_avanco;
+        }
+
+        if(grAreacentral->grau[vert_atual] > 0) {
+            j->pontuacao++;
+            salvaVertice = vert_atual;
         }
 
         esc_avanco = 'N';
