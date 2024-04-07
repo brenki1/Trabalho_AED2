@@ -6,7 +6,7 @@
 
 int main(){
 
-    Jogador jg[10]; //vetor estatico de jogadores
+    Jogador *rank = (Jogador *) malloc(10*sizeof(Jogador));
     Jogador *atual = (Jogador *) malloc(sizeof(Jogador));
 
     menu_principal(atual);

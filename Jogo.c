@@ -262,9 +262,553 @@ void jogar(Jogador *j) {
     } else if (avanco) {
         j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
-        printf(" tempo total!!: %f", j->tempo_total);
-        //nivel2(j, raiz);
+        printf("Tempo total!!: %f", j->tempo_total);
+        nivel2(j, raiz);
+    }
+
+
+
+}
+
+void nivel2(Jogador *j, ArvBin *raiz) {
+
+    int nivel = 2, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco = 'N';
+    int vert_avanco;
+
+    time_t ini_area2 = clock();
+    for(i = 0; i < gr2->nro_vertices; i++) {
+        
+        if((gr2->grau[vert_atual] == 0) && vert_atual != (gr2->nro_vertices - 1)) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            libera_Grafo(gr5);
+            libera_Grafo(gr6);
+            //libera_Grafo(areacentral);
+            derrota = 1;
+            break;
+        }
+
+        if((gr2->grau[vert_atual] == 0) && vert_atual == (gr2->nro_vertices - 1)) {
+        
+            printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
+        }
+
+        printf("Voce esta na sala %d\n", vert_atual);
+        if(gr2->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual = gr2->arestas[vert_atual][0];
+                } 
+            }
+            
+        } else if(gr2->grau[vert_atual] > 1) {
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", gr2->grau[vert_atual]); 
+                for(int j = 0; j < gr2->grau[vert_atual]; j++) {
+                    if(j == (gr2->grau[vert_atual] - 1))
+                        printf("ou %d? ", gr2->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", gr2->arestas[vert_atual][j]);
+                }
+                setbuf(stdin,NULL);
+
+                scanf("%d", &vert_avanco);
+            }
+            while(vert_avanco < 0 && vert_avanco > gr2->grau[vert_atual]);
+
+            
+
+            vert_atual = vert_avanco;
+        }
+
+        esc_avanco = 'N';
+
+    }
+    time_t fim_area2 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area2) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+
+    } else if (avanco) {
+        j->tempo_area[1] = (double)(fim_area2 - ini_area2) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area2 - ini_area2) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        nivel3(j, raiz);
     }
 
 }
 
+void nivel3(Jogador *j, ArvBin *raiz) {
+
+    int nivel = 3, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco = 'N';
+    int vert_avanco;
+
+    time_t ini_area3 = clock();
+    for(i = 0; i < gr3->nro_vertices; i++) {
+        
+        if((gr3->grau[vert_atual] == 0) && vert_atual != (gr3->nro_vertices - 1)) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            libera_Grafo(gr5);
+            libera_Grafo(gr6);
+            //libera_Grafo(areacentral);
+            derrota = 1;
+            break;
+        }
+
+        if((gr3->grau[vert_atual] == 0) && vert_atual == (gr3->nro_vertices - 1)) {
+        
+            printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
+        }
+
+        printf("Voce esta na sala %d\n", vert_atual);
+        if(gr3->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual = gr3->arestas[vert_atual][0];
+                } 
+            }
+            
+        } else if(gr3->grau[vert_atual] > 1) {
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", gr3->grau[vert_atual]); 
+                for(int j = 0; j < gr3->grau[vert_atual]; j++) {
+                    if(j == (gr3->grau[vert_atual] - 1))
+                        printf("ou %d? ", gr3->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", gr3->arestas[vert_atual][j]);
+                }
+                setbuf(stdin,NULL);
+
+                scanf("%d", &vert_avanco);
+            }
+            while(vert_avanco < 0 && vert_avanco > gr3->grau[vert_atual]);
+
+            
+
+            vert_atual = vert_avanco;
+        }
+
+        esc_avanco = 'N';
+
+    }
+    time_t fim_area3 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area3) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+
+    } else if (avanco) {
+        j->tempo_area[2] = (double)(fim_area3 - ini_area3) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area3 - ini_area3) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        nivel4(j, raiz);
+    }
+
+}
+
+
+void nivel4(Jogador *j, ArvBin *raiz) {
+
+    int nivel = 4, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco = 'N';
+    int vert_avanco;
+
+    time_t ini_area4 = clock();
+    for(i = 0; i < gr4->nro_vertices; i++) {
+        
+        if((gr4->grau[vert_atual] == 0) && vert_atual != (gr4->nro_vertices - 1)) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            libera_Grafo(gr5);
+            libera_Grafo(gr6);
+            //libera_Grafo(areacentral);
+            derrota = 1;
+            break;
+        }
+
+        if((gr4->grau[vert_atual] == 0) && vert_atual == (gr4->nro_vertices - 1)) {
+        
+            printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
+        }
+
+        printf("Voce esta na sala %d\n", vert_atual);
+        if(gr4->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual = gr4->arestas[vert_atual][0];
+                } 
+            }
+            
+        } else if(gr4->grau[vert_atual] > 1) {
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", gr4->grau[vert_atual]); 
+                for(int j = 0; j < gr4->grau[vert_atual]; j++) {
+                    if(j == (gr4->grau[vert_atual] - 1))
+                        printf("ou %d? ", gr4->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", gr4->arestas[vert_atual][j]);
+                }
+                setbuf(stdin,NULL);
+
+                scanf("%d", &vert_avanco);
+            }
+            while(vert_avanco < 0 && vert_avanco > gr4->grau[vert_atual]);
+
+            
+
+            vert_atual = vert_avanco;
+        }
+
+        esc_avanco = 'N';
+
+    }
+    time_t fim_area4 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area4) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+
+    } else if (avanco) {
+        j->tempo_area[2] = (double)(fim_area4 - ini_area4) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area4 - ini_area4) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        nivel5(j, raiz);
+    }
+
+}
+
+void nivel5(Jogador *j, ArvBin *raiz) {
+
+    int nivel = 5, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco = 'N';
+    int vert_avanco;
+
+    time_t ini_area5 = clock();
+    for(i = 0; i < gr5->nro_vertices; i++) {
+        
+        if((gr5->grau[vert_atual] == 0) && vert_atual != (gr5->nro_vertices - 1)) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            libera_Grafo(gr5);
+            libera_Grafo(gr6);
+            //libera_Grafo(areacentral);
+            derrota = 1;
+            break;
+        }
+
+        if((gr5->grau[vert_atual] == 0) && vert_atual == (gr5->nro_vertices - 1)) {
+        
+            printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
+        }
+
+        printf("Voce esta na sala %d\n", vert_atual);
+        if(gr5->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual = gr5->arestas[vert_atual][0];
+                } 
+            }
+            
+        } else if(gr5->grau[vert_atual] > 1) {
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", gr5->grau[vert_atual]); 
+                for(int j = 0; j < gr5->grau[vert_atual]; j++) {
+                    if(j == (gr5->grau[vert_atual] - 1))
+                        printf("ou %d? ", gr5->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", gr5->arestas[vert_atual][j]);
+                }
+                setbuf(stdin,NULL);
+
+                scanf("%d", &vert_avanco);
+            }
+            while(vert_avanco < 0 && vert_avanco > gr5->grau[vert_atual]);
+
+            
+
+            vert_atual = vert_avanco;
+        }
+
+        esc_avanco = 'N';
+
+    }
+    time_t fim_area5 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area5) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+
+    } else if (avanco) {
+        j->tempo_area[2] = (double)(fim_area5 - ini_area5) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area5 - ini_area5) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        nivel6(j, raiz);
+    }
+
+}
+
+void nivel6(Jogador *j, ArvBin *raiz) {
+
+    int nivel = 6, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco = 'N';
+    int vert_avanco;
+
+    time_t ini_area6 = clock();
+    for(i = 0; i < gr6->nro_vertices; i++) {
+        
+        if((gr6->grau[vert_atual] == 0) && vert_atual != (gr6->nro_vertices - 1)) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            libera_Grafo(gr5);
+            libera_Grafo(gr6);
+            //libera_Grafo(areacentral);
+            derrota = 1;
+            break;
+        }
+
+        if((gr6->grau[vert_atual] == 0) && vert_atual == (gr6->nro_vertices - 1)) {
+        
+            printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
+        }
+
+        printf("Voce esta na sala %d\n", vert_atual);
+        if(gr6->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual = gr6->arestas[vert_atual][0];
+                } 
+            }
+            
+        } else if(gr6->grau[vert_atual] > 1) {
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", gr6->grau[vert_atual]); 
+                for(int j = 0; j < gr6->grau[vert_atual]; j++) {
+                    if(j == (gr6->grau[vert_atual] - 1))
+                        printf("ou %d? ", gr6->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", gr6->arestas[vert_atual][j]);
+                }
+                setbuf(stdin,NULL);
+
+                scanf("%d", &vert_avanco);
+            }
+            while(vert_avanco < 0 && vert_avanco > gr6->grau[vert_atual]);
+
+            
+
+            vert_atual = vert_avanco;
+        }
+
+        esc_avanco = 'N';
+
+    }
+    time_t fim_area6 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area6) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+
+    } else if (avanco) {
+        j->tempo_area[2] = (double)(fim_area6 - ini_area6) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area6 - ini_area6) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        areaCentral(j, raiz);
+    }
+
+}
+
+void areaCentral(Jogador *j, ArvBin *raiz) {
+
+    printf("Parabens! Voce chegou a Area Central, percorra-a toda para ganhar 1 ponto!\n");
+
+    int nivel = 7, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
+    char esc_avanco = 'N';
+    int vert_avanco;
+
+    time_t ini_area7 = clock();
+    for(i = 0; i < grAreacentral->nro_vertices; i++) {
+        
+        if((grAreacentral->grau[vert_atual] == 0) && vert_atual != (grAreacentral->nro_vertices - 1)) {
+            printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            remove_ArvBin(raiz, gr);
+            remove_ArvBin(raiz, gr2);
+            remove_ArvBin(raiz, gr3);
+            remove_ArvBin(raiz, gr4);
+            remove_ArvBin(raiz, gr5);
+            remove_ArvBin(raiz, gr6);
+            //remove_ArvBin(raiz, areacentral);
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            libera_Grafo(gr5);
+            libera_Grafo(gr6);
+            //libera_Grafo(areacentral);
+            derrota = 1;
+            break;
+        }
+
+        if((grAreacentral->grau[vert_atual] == 0) && vert_atual == (grAreacentral->nro_vertices - 1)) {
+        
+            printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
+        }
+
+        printf("Voce esta na sala %d\n", vert_atual);
+        if(grAreacentral->grau[vert_atual] == 1) {
+            while(esc_avanco == 'N') {
+                printf("Ha 1 sala a frente, avancar? (S/N)\n");
+                setbuf(stdin, NULL);
+                scanf("%c", &esc_avanco);
+                
+
+                if(esc_avanco == 'n') 
+                    esc_avanco -= 32;
+                else if((esc_avanco == 'S') || esc_avanco == 's') {
+                    vert_atual = grAreacentral->arestas[vert_atual][0];
+                } 
+            }
+            
+        } else if(grAreacentral->grau[vert_atual] > 1) {
+            do {
+                printf("Ha %d salas a frente, deseja ir para ", grAreacentral->grau[vert_atual]); 
+                for(int j = 0; j < grAreacentral->grau[vert_atual]; j++) {
+                    if(j == (grAreacentral->grau[vert_atual] - 1))
+                        printf("ou %d? ", grAreacentral->arestas[vert_atual][j]);
+                    else
+                        printf("%d, ", grAreacentral->arestas[vert_atual][j]);
+                }
+                setbuf(stdin,NULL);
+
+                scanf("%d", &vert_avanco);
+            }
+            while(vert_avanco < 0 && vert_avanco > grAreacentral->grau[vert_atual]);
+
+            
+
+            vert_atual = vert_avanco;
+        }
+
+        esc_avanco = 'N';
+
+    }
+    time_t fim_area7 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = j->tempo_total + (double)(fim_geral - ini_area7) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+
+    } else if (avanco) {
+        j->tempo_area[2] = (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        nivel6(j, raiz);
+    }
+
+}
