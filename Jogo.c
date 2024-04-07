@@ -734,9 +734,9 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
 
 }
 
-menu_derrota(Jogador *j) {
+void menu_derrota(Jogador *j) {
 
-    int esc_retry; FILE *ranking; int verif; Jogador *temp = (Jogador *) malloc(10*sizeof(Jogador));
+    int esc_retry;
 
     printf("Voce perdeu, mas pode tentar novamente! Basta digitar 1 para tentar novamente, ou 2 para sair\n");
     scanf("%i", &esc_retry);
