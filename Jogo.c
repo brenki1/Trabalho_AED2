@@ -98,7 +98,7 @@ void menu_principal(Jogador *j) {
             j->nome[tam_s - 1] = '\0';
             setbuf(stdin, NULL);
 
-            printf("\n Pressione 1 para comecar! \n");
+            printf("\nPressione 1 para comecar! \n");
             scanf("%i", &esc_jogo);
             setbuf(stdin, NULL);
             jogar(j);
@@ -180,10 +180,11 @@ void jogar(Jogador *j) {
         fr = criaRanking();
     } else carregaRanking(rank_temp, fr);
 
+    printf("GRAU DO GRAFO ATUAL, VERTICE 0!! %d\n", gr->grau[0]);
 
-    
+    time_t ini_area1 = clock();
     for(i = 0; i < gr->nro_vertices; i++) {
-        time_t ini_area1;
+        
         if((gr->grau[vert_atual] == 0) && vert_atual != (gr->nro_vertices - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
             remove_ArvBin(raiz, gr);
@@ -200,21 +201,20 @@ void jogar(Jogador *j) {
             libera_Grafo(gr5);
             libera_Grafo(gr6);
             //libera_Grafo(areacentral);
-            time_t fim_geral;
-            j->tempo_total = (double)(fim_geral - ini_area1) / CLOCKS_PER_SEC;
-            printf(" tempo total!!: %f", j->tempo_total);
-            menu_principal(j);
+            derrota = 1;
+            break;
         }
 
         if((gr->grau[vert_atual] == 0) && vert_atual == (gr->nro_vertices - 1)) {
         
             printf("Parabens! Voce avancou de area! \n");
+            avanco = 1;
+            break;
             time_t fim_area1;
             j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
             j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
             printf(" tempo total!!: %f", j->tempo_total);
             //nivel2(j);
-            exit(1);
         }
 
         printf("Voce esta na sala %d\n", vert_atual);
@@ -255,5 +255,18 @@ void jogar(Jogador *j) {
         esc_avanco = 'N';
 
     }
+    time_t fim_area1 = clock(); time_t fim_geral = clock();
+    
+    if(derrota) {
+        j->tempo_total = (double)(fim_geral - ini_area1) / CLOCKS_PER_SEC;
+        printf("Tempo total!!: %f", j->tempo_total);
+        menu_principal(j);
+    } else if (avanco) {
+        j->tempo_area[0] = (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
+        j->tempo_total = j->tempo_total + (double)(fim_area1 - ini_area1) / CLOCKS_PER_SEC;
+        printf(" tempo total!!: %f", j->tempo_total);
+        //nivel2(j, raiz);
+    }
 
 }
+

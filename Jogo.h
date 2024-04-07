@@ -1,6 +1,9 @@
 #ifndef JOGO_H
 #define JOGO_H
 
+#include "Grafo.h"
+#include "ArvoreBin.h"
+
 typedef struct jogador {
     char nome[100];
     double tempo_total;
@@ -18,12 +21,12 @@ void menu_principal(Jogador *j);
 void menu_derrota(Jogador *j);
 void jogar(Jogador *j); //comeca pelo nivel 1
 
-void nivel2(Jogador *j);
-void nivel3(Jogador *j);
-void nivel4(Jogador *j);
-void nivel5(Jogador *j);
-void nivel6(Jogador *j);
+void nivel2(Jogador *j, ArvBin *arv);
+void nivel3(Jogador *j, ArvBin *arv);
+void nivel4(Jogador *j, ArvBin *arv);
+void nivel5(Jogador *j, ArvBin *arv);
+void nivel6(Jogador *j, ArvBin *arv);
 
-void areaCentral(Jogador *j);
+void areaCentral(Jogador *j, ArvBin *arv);
 
 #endif //JOGO_H
