@@ -112,12 +112,12 @@ int insere_ArvBin(ArvBin* raiz, Grafo* valor) {
                 free(novo);
                 return 0;  //elemento já existe
             }
-            if(valor > atual->info)
+            if(valor->ordemArvore > atual->info->ordemArvore)
                 atual = atual->dir;
             else
                 atual = atual->esq;
         }
-        if(valor->nro_vertices > ant->info->nro_vertices)
+        if(valor->ordemArvore > ant->info->ordemArvore)
             ant->dir = novo;
         else
             ant->esq = novo;

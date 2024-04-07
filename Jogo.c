@@ -165,16 +165,19 @@ void jogar(Jogador *j) {
     Grafo *gr4 = carregaGrafoDoArquivo("Grafonv2.txt");
     Grafo *gr5 = carregaGrafoDoArquivo("Grafonv5.txt");
     Grafo *gr6 = carregaGrafoDoArquivo("Grafonv6.txt");
+    Grafo *areacentral = carregaGrafoDoArquivo("Grafonv7.txt");
+
 
     //Inserindo as áreas na ávore
     ArvBin* raiz = cria_ArvBin();
 
+    insere_ArvBin(raiz, areacentral);
+    insere_ArvBin(raiz, gr3);
     insere_ArvBin(raiz, gr);
     insere_ArvBin(raiz, gr2);
-    insere_ArvBin(raiz, gr3);
+    insere_ArvBin(raiz, gr6);
     insere_ArvBin(raiz, gr4);
     insere_ArvBin(raiz, gr5);
-    insere_ArvBin(raiz, gr6);
 
     if(checkRanking == 0) {
         fr = criaRanking();

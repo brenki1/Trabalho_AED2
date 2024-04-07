@@ -11,11 +11,12 @@ typedef struct grafo{
     int** arestas;
     float** pesos;
     int* grau;
+    int ordemArvore;
 }Grafo;
 
 
 
-Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado);
+Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado, int ordemArvore);
 int insereAresta(Grafo* gr, int orig, int dest, int eh_digrafo, float peso);
 void libera_Grafo(Grafo *gr);
 

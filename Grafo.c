@@ -3,7 +3,7 @@
 #include "Grafo.h"
 
 
-Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado){
+Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado, int ordemArvore){
 
     Grafo *gr;
     gr = (Grafo*) malloc(sizeof(struct grafo));
@@ -12,6 +12,7 @@ Grafo* cria_Grafo(int nro_vertices, int grau_max, int eh_ponderado){
         gr->nro_vertices = nro_vertices;
         gr->grau_max = grau_max;
         gr->eh_ponderado = (eh_ponderado != 0)?1:0;
+        gr->ordemArvore = ordemArvore;
         gr->grau = (int*) calloc(nro_vertices, sizeof(int));
 
         gr->arestas = (int**) malloc(nro_vertices * sizeof(int*));
@@ -179,7 +180,7 @@ FILE *criaArquivo(Grafo *gr, char *nomeArquivo){
 
     arq = fopen(nomeArquivo, "w+");
 
-    fprintf(arq, "%d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado);
+    fprintf(arq, "%d %d %d %d\n", gr->nro_vertices, gr->grau_max, gr->eh_ponderado, gr->ordemArvore);
 
     for(int i=0; i<gr->nro_vertices; i++){
         for(int j=0; j<gr->grau[i]; j++){
@@ -202,10 +203,10 @@ Grafo* carregaGrafoDoArquivo(const char* nomeArquivo) {
         return NULL;
     }
 
-    int nro_vertices, grau_max, eh_ponderado;
-    fscanf(arq, "%d %d %d", &nro_vertices, &grau_max, &eh_ponderado);
+    int nro_vertices, grau_max, eh_ponderado, ordemArvore;
+    fscanf(arq, "%d %d %d %d", &nro_vertices, &grau_max, &eh_ponderado, &ordemArvore);
 
-    Grafo* gr = cria_Grafo(nro_vertices, grau_max, eh_ponderado);
+    Grafo* gr = cria_Grafo(nro_vertices, grau_max, eh_ponderado, ordemArvore);
 
     int orig, dest;
     float peso;
