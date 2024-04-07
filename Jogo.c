@@ -104,7 +104,7 @@ void menu_principal(Jogador *j) {
         }
 
         if(esc == 2){
-            printf("Voce comecara em uma area, cujo tamanho (quantidade de salas) dependera da dificuldade escolhida, seu objetivo principal eh sair desse local/area avancando pelas salas ate encontrar a saida ");
+            printf("Voce comecara em uma area, cujo tamanho (quantidade de salas e dificuldade) aumentara ao avancar para uma proxima area, seu objetivo principal eh sair desse local/area avancando pelas salas ate encontrar a saida ");
             printf("caso voce encontre uma sala sem saida e nao tiver nenhum ponto, devera recomecar o percurso a partir da sala inicial da area e uma derrota sera contabilizada. ");
             printf("Se a saida da area atual for encontrada, voce avancara para outra area, em busca da Area Central do labirinto.\n");
             printf("A Area Central contabiliza uma pontuacao para cada avanco, que permite que o jogador retroceda uma sala sacrificando um ponto, portanto, a derrota so acontece quando o jogador encontra uma sala vazia e esta sem pontos acumulados para retornar. ");
@@ -180,7 +180,20 @@ void jogar(Jogador *j) {
 
         if((gr->grau[vert_atual] == 0) && vert_atual != (gr->grau_max - 1)) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
+            libera_Grafo(gr);
+            libera_Grafo(gr2);
+            libera_Grafo(gr3);
+            libera_Grafo(gr4);
+            //libera_Grafo(gr5);
+            //libera_Grafo(gr6);
+            //libera_Grafo(gr7);
+
             menu_principal(j);
+        }
+
+        if((gr->grau[vert_atual] == 0) && vert_atual == gr->nro_vertices) {
+            printf("Parabens! Voce avancou de area! \n");
+            break;
         }
 
         printf("Você esta na sala %d\n", vert_atual);
