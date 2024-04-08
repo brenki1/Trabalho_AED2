@@ -57,6 +57,8 @@ int carregaRanking(Fila *j, FILE *jf) {
     }
 
     fclose(jf);
+    jf = NULL;
+    free(jf);
 
     return 0;
 }
@@ -90,6 +92,7 @@ int salvaRanking(Fila *jg, Jogador *j, FILE *jf) {
 
     fclose(jf);
     jf = NULL;
+    free(jf);
 
     return 0;
 }
@@ -169,6 +172,8 @@ void menu_principal(Jogador *j) {
 }
 
 void jogar(Jogador *j) {
+
+    
 
     j->tempo_total = 0;
 
@@ -797,7 +802,9 @@ void menu_derrota(Jogador *j) {
 }
 
 void menu_vitoria(Jogador *j) {
-    Fila *jogadores; FILE *arqJ;
+    FILE *arqJ;
+
+    Fila *jogadores = criar();
 
     int verif = carregaRanking(jogadores, arqJ); int escolha;
     salvaRanking(jogadores, j, arqJ);
