@@ -801,8 +801,6 @@ void menu_derrota(Jogador *j) {
     if(esc_retry == 1){
         jogar(j);
     } else if(esc_retry == 2) {
-        j = NULL;
-        free(j);
         menu_principal(j);
     }
 
