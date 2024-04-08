@@ -21,6 +21,7 @@ FILE *criaRanking();
 int carregaRanking(Fila *j, FILE *jf);
 int salvaRanking(Fila *jg, Jogador *j, FILE *jf);
 void exibeRanking();
+void apagaRanking();
 
 void menu_principal(Jogador *j);
 void menu_derrota(Jogador *j);

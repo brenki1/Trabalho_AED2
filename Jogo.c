@@ -107,7 +107,7 @@ void menu_principal(Jogador *j) {
 
     do{
 
-        printf("\t\n --- BEM VINDO(A) AO LABIRINTO ---\t\n\n1) Jogar \n2) Sobre \n3) Exibir o ranking \n4) Sair\n");
+        printf("\t\n --- BEM VINDO(A) AO LABIRINTO ---\t\n\n1) Jogar \n2) Sobre \n3) Exibir o ranking \n4) Apagar historico do ranking \n5) Sair\n");
         scanf("%i", &esc);
         setbuf(stdin,NULL);
 
@@ -150,8 +150,13 @@ void menu_principal(Jogador *j) {
             exibeRanking();
             esc = 0;
         }
+
+        if(esc == 4) {
+            apagaRanking();
+            esc = 0;
+        }
         
-        if(esc == 4){
+        if(esc == 5){
             printf("Tem certeza que deseja sair? (S/N)\n");
             scanf("%c", &esc_s);
             setbuf(stdin,NULL);
@@ -166,11 +171,11 @@ void menu_principal(Jogador *j) {
             
         }
 
-        if((esc < 1) || (esc > 4)) {
+        if((esc < 1) || (esc > 5)) {
             printf("Opcao invalida! Por favor escolha uma das opcoes no menu!\n");
         }
 
-    }while((esc < 1) || (esc > 4));
+    }while((esc < 1) || (esc > 5));
 }
 
 void jogar(Jogador *j) {
@@ -937,4 +942,15 @@ void exibeRanking() {
         printf("%s    %lf    %d", vet[j].nome, vet[j].tempo_total, vet[j].pontuacao);
         printf("\n");
     }
+}
+
+void apagaRanking() {
+
+    FILE *apg;
+
+    apg = fopen("Ranking.txt","w");
+
+    fclose(apg);
+    apg = NULL;
+    free(apg);
 }
