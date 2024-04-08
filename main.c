@@ -13,6 +13,7 @@ int main(){
     }
 
     Jogador *atual = (Jogador *) malloc(sizeof(Jogador));
+    atual->pontuacao = 0;
 
     menu_principal(atual);
 

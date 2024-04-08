@@ -283,6 +283,7 @@ void jogar(Jogador *j) {
 }
 
 void nivel2(Jogador *j, ArvBin *raiz) {
+    printf("Voce chegou a area 2 do labirinto! Boa sorte!\n");
 
     int nivel = 2, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
@@ -363,6 +364,7 @@ void nivel2(Jogador *j, ArvBin *raiz) {
 }
 
 void nivel3(Jogador *j, ArvBin *raiz) {
+    printf("Voce chegou a area 3 do labirinto! Boa sorte!\n");
 
     int nivel = 3, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
@@ -442,6 +444,7 @@ void nivel3(Jogador *j, ArvBin *raiz) {
 
 
 void nivel4(Jogador *j, ArvBin *raiz) {
+    printf("Voce chegou a area 4 do labirinto! Boa sorte!\n");
 
     int nivel = 4, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
@@ -520,6 +523,7 @@ void nivel4(Jogador *j, ArvBin *raiz) {
 }
 
 void nivel5(Jogador *j, ArvBin *raiz) {
+    printf("Voce chegou a area 5 do labirinto! Boa sorte!\n");
 
     int nivel = 5, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
@@ -598,6 +602,7 @@ void nivel5(Jogador *j, ArvBin *raiz) {
 }
 
 void nivel6(Jogador *j, ArvBin *raiz) {
+    printf("Voce chegou a area 6 do labirinto! Boa sorte!\n");
 
     int nivel = 6, derrota = 0, avanco = 0, vert_atual = 0, i, volta = 0;
     char esc_avanco = 'N';
@@ -688,7 +693,6 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
 
     time_t ini_area7 = clock();
     for(i = 0; 1; i++){
-        
         if((grAreacentral->grau[vert_atual] == 0) && vert_atual != (grAreacentral->nro_vertices - 1) && j->pontuacao == 0) {
             printf("Voce chegou uma sala sem saida.. ou seja, derrota! Mais sorte da proxima vez\n");
             derrota = 1;
@@ -709,8 +713,7 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
         }
 
         if((grAreacentral->grau[vert_atual] == 0) && vert_atual == (grAreacentral->nro_vertices - 1)) {
-        
-            printf("Parabens! Voce avancou de area! \n");
+    
             avanco = 1;
             break;
         }
@@ -751,7 +754,7 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
             vert_atual = vert_avanco;
         }
 
-        if(grAreacentral->grau[vert_atual] > 0) {
+        if(grAreacentral->grau[vert_atual] > 0 && salvaVertice != vert_atual) {
             j->pontuacao++;
             salvaVertice = vert_atual;
         }
@@ -770,7 +773,7 @@ void areaCentral(Jogador *j, ArvBin *raiz) {
         j->tempo_area[2] = (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
         j->tempo_total = j->tempo_total + (double)(fim_area7 - ini_area7) / CLOCKS_PER_SEC;
         printf("Tempo total!!: %.2f\n", j->tempo_total);
-        //menu_vitoria(j);
+        menu_vitoria(j);
     }
 
 }
