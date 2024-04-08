@@ -81,6 +81,8 @@ int salvaRanking(Fila *jg, Jogador *j, FILE *jf) {
         inserir(jg, *j);
     }
 
+    inserir(jg, *j);
+
     i = jg->inicio;
     q = jg->qtd;
 
